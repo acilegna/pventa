@@ -13,6 +13,7 @@ class Caja extends Model
     //lista blanca atributos que deberían ser asignables en masa
     protected $fillable = ['id_user','descripcion','status'];
 
+    //METODO ORIENTADO A OBJETO
    	public static function getIdSesion($sesionId_caja){
 		return self::where("id",$sesionId_caja)->update(["status" => "1"]);
 	}

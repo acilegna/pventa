@@ -212,7 +212,7 @@ class CajaController extends Controller{
 	 		"termino_en" => $fechaHora]);
 		//actualizar caja a disponible despues de cerrar
 		//$caja = Caja::where("id",$sesionId_caja)->update(["status" => "1"]);
-		//CAMBIO A POO
+		// PRIMER CAMBIO A POO
 		 $caja = Caja::getIdSesion();
 			 	 
 	}
