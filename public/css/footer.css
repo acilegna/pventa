@@ -1,0 +1,43 @@
+.site-footer
+{
+    width: 100%;
+    height: auto;    
+    bottom: 0 !important;
+    background:#f1f1f1;
+    color: #5e5e5e;
+    position:fixed;
+    left:0px; 
+}
+
+.site-footer hr
+{
+  border-top-color:#bbb;
+  opacity:0.5
+}
+ 
+ 
+.site-footer a
+{
+   color: #065185;
+}
+.site-footer a:hover
+{
+  color:#0099ff;
+  text-decoration:none;
+}
+ 
+
+.copyright-text
+{
+   margin: 0 auto;
+}
+ 
+@media (max-width:767px)
+{
+   
+  .site-footer .copyright-text,.site-footer
+  {
+    text-align:center
+  }
+}
+ 

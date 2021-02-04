@@ -1,0 +1,75 @@
+.fa-user ,
+.fa-lock{
+    
+    color:   black;
+}	
+ 
+ 
+.user_card {
+			height: 290px;
+			width: 330px;
+			margin-top:80px;
+	       
+			 background: rgba(0,0,0,0.3) ;
+     
+			position: relative;
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			padding: 5px;
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			-moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+			border-radius: 5px;
+
+		}
+		.brand_logo_container {
+			position: absolute;
+			height: 100px;
+			width: 100px;
+			top: -45px;
+			border-radius: 50%;
+			background: rgba(0,0,0,0.3) ;
+     
+			padding: 5px;
+			text-align: center;
+		}
+
+		.brand_logo {
+			height: 90px;
+			width: 90px;
+			border-radius: 50%;
+			/*border: 2px solid white;*/
+		}
+		.form_container {
+			margin-top: 50px;
+		}
+		.login_btn {
+			width: 99%;
+			
+           background: #0e76bb;
+			color: white !important;
+		}
+       .login_btn:hover{
+			width: 100%;
+			background: #096eb2;
+		 
+		}
+		.login_btn:focus {
+			box-shadow: none !important;
+			outline: 0px !important;
+}
+		.input-group-text {
+			background: white !important;
+			color: white !important;
+			border: 0 !important;
+			border-radius: 0.25rem 0 0 0.25rem !important;
+		}
+		.input_user,
+		.input_pass:focus {
+			box-shadow: none !important;
+			outline: 0px !important;
+		}
+		.custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+			background-color: #622141 !important;
+		}
