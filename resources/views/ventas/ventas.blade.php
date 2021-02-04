@@ -94,7 +94,8 @@
 		                   	@endphp
 	                   	@endif 					                 	 
 					@endforeach	
-					
+
+					{{--IMPORTANTE revisar este error con id_prod}}							
 					{{--inicio para productos que no se registro mayoreo--}}
 					@if ($id_prod != $id_agregado and $total[1]==1)
 						@php 
@@ -308,7 +309,7 @@
 		     					 		<div class="input-group text-center">			            					
 			            					<h2 style="font-size:50px;color:#0d069c" class="text-center">$</h2>	   
 			            					<h1 id="total_pagar" class="text-center"style="font-size:50px;color:#0d069c"></h1>
-			            					<h3 style="font-size:50px;color:#0d069c" class="text-center">.00</h3>			            
+			            								            
 			            				</div>					        						 
 				        			</div>	
 				        		</div>

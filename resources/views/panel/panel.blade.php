@@ -662,15 +662,15 @@
             data:{},
             dataType:'json',
             success:function(data){           
-              $('#total_pagar').text(+data.total_pagar);
-              $('#pago').val( data.total_pagar);
+              $('#total_pagar').text(data.total_pagar);
+              $('#pago').val(data.total_pagar);
               $('#articulos').text(data.total_articulos);  
             }
           })        
           $("#pago").keyup(function ()  {
             var pagoCon= document.getElementById("pago").value;           
             var total=$("#total_pagar").text();
-            Resultado = (parseFloat(total) - parseFloat(pagoCon));
+            Resultado = (parseFloat(pagoCon) - parseFloat(total));
             $('#cambio').val( Resultado);
 
           });
