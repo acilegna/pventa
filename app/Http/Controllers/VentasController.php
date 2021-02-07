@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use App\Cliente;
-use App\Producto;
-use App\Venta;
-use App\Producto_vendido;
+use App\Product;
+use App\Sell;
+use App\SellProduct;
 use App\Inventario;
 use App\Mayoreo;
 class VentasController extends Controller
@@ -32,7 +32,7 @@ class VentasController extends Controller
         $total_venta=$request->input("totalP");
         $productos = $this->obtenerProductos();
         //insertar producto en venta antes para sacar id
-        $venta = new Venta();
+        $venta = new Sell();
         $venta->total=0;
         $venta->fecha= date('y-m-d');  
   
@@ -41,9 +41,9 @@ class VentasController extends Controller
          // Recorrer arreglo carrito de compras
         foreach ($productos as $producto) {
             // El producto que se vende mandar datos para agregar en venta...  
-            $venta = Venta::latest('id')->first();
+            $venta = Sell::latest('id')->first();
             $id_venta=$venta["id"];
-            $producto_vendido= new Producto_vendido();
+            $producto_vendido= new SellProduct();
                  
             $producto_vendido->fill([
                 "id_venta" => $id_venta,                
@@ -60,7 +60,7 @@ class VentasController extends Controller
             //guardar en 
             $producto_vendido->saveOrFail();             
             // restar al original
-            $productoActualizado = Producto::find($producto->id);
+            $productoActualizado = Product::find($producto->id);
             $productoActualizado->existencia -=  $producto_vendido->cantidad;
             $productoActualizado->saveOrFail();            
              
@@ -111,7 +111,7 @@ class VentasController extends Controller
         $value_uno = $request->input('agregarV');
        
         
-        $producto = Producto::where("codigo", "=", $codigo_b)->first();
+        $producto = Product::where("codigo", "=", $codigo_b)->first();
 
         //"Si no hay algo..esta vacio"
         if (!$producto) {
@@ -216,7 +216,7 @@ class VentasController extends Controller
        
              $codigo=$request->input("codigo");
        
-            $producto = Producto::where("codigo", "=", $codigo)->first();
+            $producto = Product::where("codigo", "=", $codigo)->first();
             $this->agregarProductoTabla($producto,$codigo); 
            
             
@@ -397,7 +397,7 @@ class VentasController extends Controller
             $id_agregado=$producto->id;
             $cantidad_p=$producto->cantidad;
             $sql_mayoreos = Mayoreo::where("id_prod", "=", $id_agregado)->get();
-            $sql_precio = Producto::where("id", "=", $id_agregado)->get(); 
+            $sql_precio = Product::where("id", "=", $id_agregado)->get(); 
             //si producto no esta dado de alta con mayoreo y regresa vacia consulta
             if($sql_mayoreos->isEmpty()){                  
                 $total += $producto->cantidad * $producto->p_venta; 

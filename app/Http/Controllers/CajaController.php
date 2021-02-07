@@ -1,46 +1,42 @@
 <?php
-
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use DB;
-use App\Movimiento_caja;
-use App\Movimiento_cierre;
-use App\Producto_vendido;
-use App\Caja;
-use App\Venta;
-use App\Producto;
+use App\MovePayment;
+use App\MoveClosing; 
+use App\CashBox;
+use App\Sell;
 
 class CajaController extends Controller{   
- 	public function funcion(){
 
+ 	public function funcion(){
  		$alert="";   
         //guardar id de caja en una sesion
         session(['alert' => $alert]); 
         $alert = session('alert');
-
  	}
- 	public function altaRegistroFin(Request $request){
- 		 
 
+ 	public function altaRegistroFin(Request $request){ 		 
  		$efectivoCaja= $request->efectivoFinal;	
  		$sesionUserTurno = session('id_usuTurno'); 
 		$datos=$this->obtenerDatos();
+
 		//sacar datos del arreglo
 		$fechaHora=$datos[1]; 
 		//consulta para comparar total en caja con efectivo al cierre
 		
 		$efectivo = DB::table('Movimiento_caja')->where("id_usu", "=",$sesionUserTurno)->where("status","=","abierto" )->get();
+
 		$totalSuma=$efectivo[0]->efectivo_cierre;
 		$id_Mov=$efectivo[0]->id;
 		//contar total de id
-		$ids= DB::table('movimientos_cierre')->where("id_mov","=",$id_Mov)->count();
-	 
+		$ids= DB::table('movimientos_cierre')->where("id_mov","=",$id_Mov)->count();	 
 	 
 		
 		if($totalSuma==$efectivoCaja){
 			//obtiene registro del  movimiento con usuario logueado y status abierto y modifica	 
-	 		$Movcaja = Movimiento_caja::where("id_usu", "=",$sesionUserTurno)->where("status","=","abierto" )->update([	 		
+	 		$Movcaja = MovePayment::where("id_usu", "=",$sesionUserTurno)->where("status","=","abierto" )->update([	 		
 	 	    "acomulado_ventas" =>0,
 	 		"acomulado_entradas" =>0,
 	 		"acomulado_salidas" =>0,
@@ -49,26 +45,18 @@ class CajaController extends Controller{
 		    "status" => "cerrado", 
 	 		"termino_en" => $fechaHora]); 
 		} elseif( $ids>=3){
+			return view('cajas.registroFinal')->with('alert', 'Mensaje no Vacio'); 
 
-          $this->funcion();
-          
-
- 
-        
-			 	 // return redirect()->back()->with('alert', 'La factura no esta guardada');
-        return view('cajas.registroFinal')->with('alert', 'Mensaje no Vacio'); 
-
-		}elseif($ids<=3){
-			 
-		//insertar en tabla movimientos de cierre
-		$movimientos = new Movimiento_cierre;		 
-		$movimientos->id_user=$sesionUserTurno;
-		$movimientos->id_mov=$id_Mov;			 
- 		$movimientos->fechaHora=$fechaHora; 
-		$movimientos->save();
+		}elseif($ids<=3){			 
+			//insertar en tabla movimientos de cierre
+			$movimientos = new MoveClosing;		 
+			$movimientos->id_user=$sesionUserTurno;
+			$movimientos->id_mov=$id_Mov;			 
+	 		$movimientos->fechaHora=$fechaHora; 
+			$movimientos->save();
 		}
 
- 	} 
+ 	} //fin metodo
 
  	//funcion mostrar para registro de dinero 
 	public function registroIni(){
@@ -85,14 +73,14 @@ class CajaController extends Controller{
  	}
  	//eliminar cajas
  	public function deleteCaja($parameters){
-    	$cajas = Caja::find($parameters);
+    	$cajas = CashBox::find($parameters);
     	$cajas->delete();
     	return view('cajas.allCajas');
     }
     //guardar cambios de modifcicacion de cajas
     public function saveCangecajas(Request $request){         
     	$id = $request->inputId;
-    	$cajas = Caja::find($id);
+    	$cajas = CashBox::find($id);
     	$cajas->descripcion = $request->inputDescripcion;
     	$cajas->status = $request->stcaja;    	  	 
     	$cajas->save();  
@@ -161,7 +149,7 @@ class CajaController extends Controller{
  		 //recoger valor seleccionado  ion
  		 //$status = $request->input('inputStatus');
  		 $status = $request->get('inputStatus');
- 		 $caja = new Caja;
+ 		 $caja = new CashBox;
  		 $caja->descripcion=$nameCaja;
  		 $caja->status=$status;
  		 $caja->save();
@@ -182,7 +170,7 @@ class CajaController extends Controller{
 		 
 		$suma=$inicial+$total_venta;
 		//Para crear un registro.
-		$movimientos = new Movimiento_caja;		 
+		$movimientos = new MovePayment;		 
 		$movimientos->id_caja=$id_caja;
 		$movimientos->id_usu=$id_usu;		 
 		$movimientos->dinero_inicial=$inicial;
@@ -201,7 +189,8 @@ class CajaController extends Controller{
     //cerrar caja  despues de abrir turno
 	public function cerrarCaja($fechaHora,$sesionId_caja,$id_usu){	
 		//obtiene registro del  movimiento con usuario logueado y status abierto y modifica	 
-	 	$Movcaja = Movimiento_caja::where("id_usu", "=",$id_usu)->where("status","=","abierto" )->update([	 		
+	 	/*
+	 	$Movcaja = MovePayment::where("id_usu", "=",$id_usu)->where("status","=","abierto" )->update([	 		
 	 	    "acomulado_ventas" =>0,
 	 		"acomulado_entradas" =>0,
 	 		"acomulado_salidas" =>0,
@@ -209,20 +198,22 @@ class CajaController extends Controller{
 			"total_caja" =>0,
 			"numero_ventas" =>0,
 		    "status" => "cerrado", 
-	 		"termino_en" => $fechaHora]);
+	 		"termino_en" => $fechaHora]);*/
+
+	 	$Movcaja=MovePayment::updateAll($id_usu,$fechaHora);
 		//actualizar caja a disponible despues de cerrar
-		//$caja = Caja::where("id",$sesionId_caja)->update(["status" => "1"]);
+		 //$caja = CashBox::where("id",$sesionId_caja)->update(["status" => "1"]);
 		// PRIMER CAMBIO A POO
-		 $caja = Caja::getIdSesion();
+		 $caja = CashBox::getIdSesion($sesionId_caja);
 			 	 
 	}
 	//funcion Cerrar turno que estuvo abierto
 	public function cerrarTurno($fechaHora,$sesionId_usuTurno){
- 		$consultaMovcaja = Movimiento_caja::where("id_usu", "=",$sesionId_usuTurno)->where("status","=","abierto" )->get();
+ 		$consultaMovcaja = MovePayment::where("id_usu", "=",$sesionId_usuTurno)->where("status","=","abierto" )->get();
 		foreach ($consultaMovcaja as $key => $value) {}
 		$idCj=$value->id_caja; 
-        $caja = Caja::where("id",$idCj)->update(["status" => "1"]);				 
-		$Movcaja = Movimiento_caja::where("id_usu", "=",$sesionId_usuTurno)->where("status","=","abierto" )->update(["status" => "cerrado", "termino_en" => $fechaHora]);
+        $caja = CashBox::where("id",$idCj)->update(["status" => "1"]);				 
+		$Movcaja = MovePayment::where("id_usu", "=",$sesionId_usuTurno)->where("status","=","abierto" )->update(["status" => "cerrado", "termino_en" => $fechaHora]);
  	}
 
   
@@ -231,7 +222,7 @@ class CajaController extends Controller{
  	}
 
 	public function mantenerTurno(){
-		$movi = Movimiento_caja::latest('id')->first();
+		$movi = MovePayment::latest('id')->first();
 	 			 
 		$movi->acomulado_ventas= 0;
 		$movi->acomulado_entradas=0;
@@ -243,7 +234,7 @@ class CajaController extends Controller{
 	}
 	//sacar el total de las ventas del ultimo registro
 	public function totalVenta(){
-		$venta = Venta::latest('id')->first();
+		$venta = Sell::latest('id')->first();
         $total_venta=$venta["total"];       
         return  $total_venta;
 	}
@@ -295,7 +286,7 @@ class CajaController extends Controller{
         $id_caja =$request->caja;
        
         //modificar status de caja que se elijio ponerla como inactiva
-		$caja = Caja::where("id",$id_caja)->update(["status" => "0"]);        
+		$caja = CashBox::where("id",$id_caja)->update(["status" => "0"]);        
         if ($request->input("registrar") == "regCaja"){   	      	        	       	  
         	$this->saveMovimientoscaja($id_caja,$inicial,$id_usu,$fechaHora);
         	return view('panel.panel');         	

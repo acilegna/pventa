@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use App\Producto;
+use App\Product;
 use App\Mayoreo;
 use DB;
 
@@ -11,7 +11,7 @@ class MayoreoController extends Controller
 {
   public function viewMayoreo()
   {
-    $productos = Producto::all();
+    $productos = Product::all();
     
     return view('mayoreo.mayoreo', compact('productos'));
   }

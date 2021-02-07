@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Caja extends Model
+class CashBox extends Model
 {
     protected $table = 'cajas';
     protected $primaryKey = 'id';
@@ -15,7 +15,8 @@ class Caja extends Model
 
     //METODO ORIENTADO A OBJETO
    	public static function getIdSesion($sesionId_caja){
-		return self::where("id",$sesionId_caja)->update(["status" => "1"]);
+		$valor=self::where("id",$sesionId_caja)->update(["status" => "1"]);
+        return $valor;
 	}
 
     	

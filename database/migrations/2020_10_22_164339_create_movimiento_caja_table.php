@@ -17,11 +17,11 @@ class CreateMovimientoCajaTable extends Migration
             $table->increments('id');  
             $table->integer('id_caja');
             $table->integer('id_usu');
-            $table->float('dinero_inicial')->unique();
+            $table->float('dinero_inicial');
             $table->float('acomulado_ventas');
             $table->decimal('acomulado_entradas');   
             $table->decimal('acomulado_salidas');   
-            $table->integer('efectivo_cierre')->unique();
+            $table->integer('efectivo_cierre');
             $table->float('total_caja')->default(0);
             $table->integer('numero_ventas');
             $table->string('status');

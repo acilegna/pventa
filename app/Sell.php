@@ -4,14 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Movimiento_cierre extends Model
+class Sell extends Model
 {
-    protected $table = 'movimientos_cierre';
+    protected $table = 'ventas';
     protected $primaryKey = 'id';
-    public $timestamps = false;
+    public $timestamps = true;
 
     //lista blanca atributos que deberían ser asignables en masa
     protected $fillable = 
-    	['id_user','id_mov','fechaHora'];
+    	['total','fecha'];
 }
-

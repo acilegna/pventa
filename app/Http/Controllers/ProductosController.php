@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use App\Producto;
+use App\Product;
 use App\Inventario;
 use DB;
 
@@ -10,7 +10,7 @@ class ProductosController extends Controller
 {
   public function all() {
     //obtener datos de tu base de datos
-    $productos = Producto::all();
+    $productos = Product::all();
 
     foreach ($productos as $product) {
       echo $product->id;
@@ -35,7 +35,7 @@ class ProductosController extends Controller
       
     $insertedId = $request->inputId;
     $inventarios = new Inventario;
-    $productos = Producto::find($insertedId);
+    $productos = Product::find($insertedId);
     $user = \Auth::user();
     $id_user= $user->id_employee;     
     $descripcion="Modificación de producto";
@@ -86,7 +86,7 @@ class ProductosController extends Controller
     $costo_u=$inv["costo_unitario"];  
     $costo_d=$inv["costo_despues"]; 
 
-    $productos = Producto::find($insertedId);
+    $productos = Product::find($insertedId);
     $user = \Auth::user();
     $id_user= $user->id_employee;
     $descripcion="Recepción de inventario";
@@ -114,7 +114,7 @@ class ProductosController extends Controller
     //recibe todo  lo que manda el formulario    
    // var_dump($recibe=$request->all());    
     
-    $productos = new Producto;
+    $productos = new Product;
     $inventarios = new Inventario;
     //Recibir valor de boton
     $value_new = $request->input('btn1');
@@ -245,7 +245,7 @@ class ProductosController extends Controller
   }
 
   public function deleteProd($parameters){
-    $productos = Producto::find($parameters);
+    $productos = Product::find($parameters);
     $productos->delete();
     return view('productos.allProductos');
   }

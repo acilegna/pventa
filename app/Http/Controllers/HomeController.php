@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Caja;
-use App\Movimiento_caja;
+use App\CashBox;
+use App\MovePayment;
 use DB;
 
 class HomeController extends Controller
@@ -46,7 +46,7 @@ class HomeController extends Controller
         //Verificar si la consulta arroja resultados
         $i=count($resOpen);
         //consultar cajas disponibles
-        $cajaClose= Caja::where("status",1)->get();    
+        $cajaClose= CashBox::where("status",1)->get();    
         switch (true) {
         //si no hay sesiones abiertas
         case $i=='0':

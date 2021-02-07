@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use App\Venta;
-use App\Producto;
+use App\Sell;
+use App\Product;
 use DB;
 use Mpdf\Mpdf;
 //use DataTables;
