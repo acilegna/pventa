@@ -16,11 +16,9 @@ class MovePayment extends Model
     	 'acomulado_ventas','acomulado_entradas', 'acomulado_salidas',
     	 'efectivo_cierre','total_caja','numero_ventas', 'status',
     	 'inicio_en','termino_en'];
-    public static function updateAll($id_user, $fechaHora){
-      
 
-    
-    return self::where("id_usu", "=",$id_user)->where("status","=","abierto" )->update([          
+    public static function updateAll($id_user, $fechaHora){        
+        return self::where("id_usu", "=",$id_user)->where("status","=","abierto" )->update([          
             "acomulado_ventas" =>0,
             "acomulado_entradas" =>0,
             "acomulado_salidas" =>0,
@@ -29,6 +27,20 @@ class MovePayment extends Model
             "numero_ventas" =>0,
             "status" => "cerrado", 
             "termino_en" => $fechaHora]);
-}
+    }
+    public static function getTurnoOpen($sesionUserTurno){
+        return self::where("id_usu", "=",$sesionUserTurno)->where("status","=","abierto" )->get();
+    }
+
+    public static function updateTurnoOpen($sesionUserTurno, $efectivoCaja, $fechaHora){
+        return self::where("id_usu", "=",$sesionUserTurno)->where("status","=","abierto" )->update([         
+            "acomulado_ventas" =>0,
+            "acomulado_entradas" =>0,
+            "acomulado_salidas" =>0,
+            "total_caja" =>$efectivoCaja,
+            "numero_ventas" =>0,
+            "status" => "cerrado", 
+            "termino_en" => $fechaHora]);
+    }
     	 
 }

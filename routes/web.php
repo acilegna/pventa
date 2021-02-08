@@ -50,9 +50,7 @@ Route::post('/saveC', 'CajaController@saveCangecajas')->name('saveC');
 Route::get('/regInicial', 'CajaController@registroIni')->name('regInicial');
  
 Route::get('/turnoOpen', 'CajaController@turnoOpen')->name('turnoOpen');
-Route::post('/verificar', 'CajaController@altaRegistroFin')->name('verificar');
- 
- 
+Route::post('/verificar', 'CajaController@altaRegistroFin')->name('verificar'); 
  
 //PRODUCTOS
 Route::post('/save', 'ProductosController@saveNewProduct')->name('save');
@@ -68,7 +66,6 @@ Route::get('/deletePr/{id}', 'ProductosController@deleteProd')->name('deletePr')
 Route::get('/viewInv/{id}', 'InventariosController@viewInvent')->name('viewInv');
 
 // VENTAS
-
 Route::get('/viewVents', 'VentasController@viewVentas')->name('viewVents'); 
 Route::post("/buscarProducto", "VentasController@buscarProducto")->name("buscarProducto");
 

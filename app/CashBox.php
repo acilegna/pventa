@@ -19,6 +19,30 @@ class CashBox extends Model
         return $valor;
 	}
 
+    public static function getQuery ($query){
+        return self::where('id', 'like', '%'.$query.'%')
+            ->orWhere('status', 'like', '%'.$query.'%')
+            ->orWhere('descripcion', 'like', '%'.$query.'%')
+            ->orderBy('id', 'desc')
+            ->get();  
+    } 
+    public static function getAll (){
+        return self::orderBy('id', 'desc')->get(); 
+    } 
+    public static function getBox ($idCaja){
+        return self::where('id',$idCaja)->get(); 
+    } 
+    public static function updateBoxActive ($idCj){
+        return self::where("id",$idCj)->update(["status" => "1"]);   
+    }
+    public static function updateBoxInactive ($id_caja){
+        return self::where("id",$id_caja)->update(["status" => "0"]);   
+    }
+
+
+     
+
+     
     	
 	 
 }

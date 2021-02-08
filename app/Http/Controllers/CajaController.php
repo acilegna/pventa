@@ -8,7 +8,7 @@ use App\MoveClosing;
 use App\CashBox;
 use App\Sell;
 
-class CajaController extends Controller{   
+class CajaController extends Controller{  
 
  	public function funcion(){
  		$alert="";   
@@ -25,25 +25,16 @@ class CajaController extends Controller{
 		//sacar datos del arreglo
 		$fechaHora=$datos[1]; 
 		//consulta para comparar total en caja con efectivo al cierre
-		
-		$efectivo = DB::table('Movimiento_caja')->where("id_usu", "=",$sesionUserTurno)->where("status","=","abierto" )->get();
+		$efectivo=MovePayment::getTurnoOpen($sesionUserTurno);
 
 		$totalSuma=$efectivo[0]->efectivo_cierre;
 		$id_Mov=$efectivo[0]->id;
-		//contar total de id
-		$ids= DB::table('movimientos_cierre')->where("id_mov","=",$id_Mov)->count();	 
-	 
+		//contar total de id		 
+	 	$ids=MoveClosing::getTotalId($id_Mov);
 		
 		if($totalSuma==$efectivoCaja){
 			//obtiene registro del  movimiento con usuario logueado y status abierto y modifica	 
-	 		$Movcaja = MovePayment::where("id_usu", "=",$sesionUserTurno)->where("status","=","abierto" )->update([	 		
-	 	    "acomulado_ventas" =>0,
-	 		"acomulado_entradas" =>0,
-	 		"acomulado_salidas" =>0,
-			"total_caja" =>$efectivoCaja,
-			"numero_ventas" =>0,
-		    "status" => "cerrado", 
-	 		"termino_en" => $fechaHora]); 
+			$Movcaja= MovePayment::updateTurnoOpen($sesionUserTurno, $efectivoCaja, $fechaHora);
 		} elseif( $ids>=3){
 			return view('cajas.registroFinal')->with('alert', 'Mensaje no Vacio'); 
 
@@ -86,56 +77,51 @@ class CajaController extends Controller{
     	$cajas->save();  
     }
     public function  editCajas($param){
-    	$res=DB::table('cajas')->where('id',$param)->get();   
+
+    	$res=  CashBox::getBox($param);   
    		return view('cajas.editCajas',['res'=>$res]);
+   		 
   	}
  	public function cajasAjax(Request $request){    
-	    if($request->ajax())
-	    {
-	      $output = '';
-	      $query = $request->get('query');
-	      if($query != '')
-	      {
-	        //hace el filtro
-	        $data = DB::table('cajas')
-	        ->where('id', 'like', '%'.$query.'%')
-	        ->orWhere('status', 'like', '%'.$query.'%')
-	        ->orWhere('descripcion', 'like', '%'.$query.'%')
-	        ->orderBy('id', 'desc')
-	        ->get();       
-	      }
-	       else
-	          {
-	            //muestra todos los datos
-	            $data = DB::table('cajas')
-	             ->orderBy('id', 'desc')
-	             ->get();
-	          }
-	      $total_row = $data->count();
-	      if($total_row > 0)
-	      {
-	        foreach($data as $row)
-	        {
-	          $output .= '
-	            <tr>	               
-	              <td>'.$row->descripcion.'</td>
-	              <td>'.$row->status.'</td>	               
-	              <td>
-	                <a data-toggle="tooltip" data-placement="right" title="Editar" href="./editCj/'.$row->id.'"><span class="glyphicon glyphicon-pencil borde-edit" aria-hidden="true" ></span></a>
+	    if($request->ajax())	    {
+	    	$output = '';
 
-	                <a data-toggle="tooltip" data-placement="right" title="Eliminar" href="./deleteCj/'.$row->id.'"><span class="glyphicon glyphicon-trash borde-delete" aria-hidden="true" ></span> </a>
-	              </td>
-	            </tr>';
-	          }
+	      	$query = $request->get('query');
+	      	if($query != '')
+	      	{
+	        	//hace el filtro
+	        	$data = CashBox::getQuery($query);       
+	      	}
+	       	else
+	        {
+	            //muestra todos los datos
+	            $data = CashBox::getAll();
+	        }
+	      	$total_row = $data->count();
+	      	if($total_row > 0)
+	      	{
+	        	foreach($data as $row)
+	        	{
+	          		$output .= '
+	            	<tr>	               
+	              		<td>'.$row->descripcion.'</td>
+	              		<td>'.$row->status.'</td>	               
+	              		<td>
+	                		<a data-toggle="tooltip" data-placement="right" title="Editar" href="./editCj/'.$row->id.'"><span class="glyphicon glyphicon-pencil borde-edit" aria-hidden="true" ></span></a>
+
+	                		<a data-toggle="tooltip" data-placement="right" title="Eliminar" href="./deleteCj/'.$row->id.'"><span class="glyphicon glyphicon-trash borde-delete" aria-hidden="true" ></span> </a>
+	                	</td>
+	            	</tr>';
+	          	}
 	        }
 	        else
 	        {
-	          $output = '<tr><td align="center" colspan="5">No Data Found</td></tr>';
+	         	$output = '<tr><td align="center" colspan="5">No Data Found</td></tr>';
 	        }
-	        $data = array(
-	       'table_data'  => $output,
-	       'total_data'  => $total_row);
-	        echo json_encode($data);
+	        	$data = array(
+	       			'table_data'  => $output,
+	       			'total_data'  => $total_row);
+	        		echo json_encode($data);
 	    }
 	}
 
@@ -186,44 +172,14 @@ class CajaController extends Controller{
 		$movimientos->save();
 	}
 
-    //cerrar caja  despues de abrir turno
-	public function cerrarCaja($fechaHora,$sesionId_caja,$id_usu){	
-		//obtiene registro del  movimiento con usuario logueado y status abierto y modifica	 
-	 	/*
-	 	$Movcaja = MovePayment::where("id_usu", "=",$id_usu)->where("status","=","abierto" )->update([	 		
-	 	    "acomulado_ventas" =>0,
-	 		"acomulado_entradas" =>0,
-	 		"acomulado_salidas" =>0,
-			"efectivo_cierre" =>0,
-			"total_caja" =>0,
-			"numero_ventas" =>0,
-		    "status" => "cerrado", 
-	 		"termino_en" => $fechaHora]);*/
-
-	 	$Movcaja=MovePayment::updateAll($id_usu,$fechaHora);
-		//actualizar caja a disponible despues de cerrar
-		 //$caja = CashBox::where("id",$sesionId_caja)->update(["status" => "1"]);
-		// PRIMER CAMBIO A POO
-		 $caja = CashBox::getIdSesion($sesionId_caja);
-			 	 
-	}
-	//funcion Cerrar turno que estuvo abierto
-	public function cerrarTurno($fechaHora,$sesionId_usuTurno){
- 		$consultaMovcaja = MovePayment::where("id_usu", "=",$sesionId_usuTurno)->where("status","=","abierto" )->get();
-		foreach ($consultaMovcaja as $key => $value) {}
-		$idCj=$value->id_caja; 
-        $caja = CashBox::where("id",$idCj)->update(["status" => "1"]);				 
-		$Movcaja = MovePayment::where("id_usu", "=",$sesionId_usuTurno)->where("status","=","abierto" )->update(["status" => "cerrado", "termino_en" => $fechaHora]);
- 	}
-
+    
   
  	public function turnoOpen(){
  		return view('cajas.turnoOpen'); 
  	}
 
 	public function mantenerTurno(){
-		$movi = MovePayment::latest('id')->first();
-	 			 
+		$movi = MovePayment::latest('id')->first();	 			 
 		$movi->acomulado_ventas= 0;
 		$movi->acomulado_entradas=0;
 		$movi->acomulado_salidas=0;
@@ -239,7 +195,6 @@ class CajaController extends Controller{
         return  $total_venta;
 	}
 	public function obtenerDatos(){
-
 		//id usuario logueado
 		$id_user=Auth()->user()->id_employee;          
         //fecha y hora
@@ -251,14 +206,13 @@ class CajaController extends Controller{
 	}
     public function envia(Request $request){
     	//recibir id del usuario que continuaremos turno
-		$id_usuTurno=$request->Opcioncaja;
-    	 
+		$id_usuTurno=$request->Opcioncaja;    	 
 		//guardar id de usuario  usuario que continuaremos turno en una sesion
     	session(['id_usuTurno' => $id_usuTurno]);   
 
     	//
     	if ($request->input("cerrarTurno") == "closeTurno"){  
-    		 //var_dump("hola cerrar y nuevo");
+    		 
     		//usar funcion para enviar variable alert
     		 $this->funcion();
     		 //se envia vacia
@@ -274,6 +228,25 @@ class CajaController extends Controller{
     	}
 
     }
+
+    //cerrar caja  despues de abrir turno
+	public function cerrarCaja($fechaHora, $sesionId_caja, $id_usu){	
+		//obtiene registro del  movimiento con usuario logueado y status abierto y modifica	 
+	 	$Movcaja=MovePayment::updateAll($id_usu,$fechaHora);
+		//actualizar caja a disponible despues de cerrar
+		//PRIMER CAMBIO A POO
+		$caja = CashBox::getIdSesion($sesionId_caja);
+			 	 
+	}
+	//funcion Cerrar turno que estuvo abierto
+	public function cerrarTurno($fechaHora,$sesionId_usuTurno){
+ 		$consultaMovcaja = MovePayment::where("id_usu", "=",$sesionId_usuTurno)->where("status","=","abierto" )->get();
+		foreach ($consultaMovcaja as $key => $value) {}
+		$idCj=$value->id_caja; 
+        $caja = CashBox::updateBoxActive($idCj);				 
+		$Movcaja = MovePayment::where("id_usu", "=",$sesionId_usuTurno)->where("status","=","abierto" )->update(["status" => "cerrado", "termino_en" => $fechaHora]);
+ 	}
+
     	 
 	public function operacionCaja(Request $request){		  
 		$datos=$this->obtenerDatos();
@@ -283,10 +256,9 @@ class CajaController extends Controller{
         //recibir dinero inicial
         $inicial=$request->inicial ;
         //recibir id de la caja que inicia sesion  
-        $id_caja =$request->caja;
-       
-        //modificar status de caja que se elijio ponerla como inactiva
-		$caja = CashBox::where("id",$id_caja)->update(["status" => "0"]);        
+        $id_caja =$request->caja;       
+        //modificar status de caja  ponerla  inactiva
+		$caja = CashBox::updateBoxInactive($id_caja);        
         if ($request->input("registrar") == "regCaja"){   	      	        	       	  
         	$this->saveMovimientoscaja($id_caja,$inicial,$id_usu,$fechaHora);
         	return view('panel.panel');         	
@@ -298,7 +270,7 @@ class CajaController extends Controller{
       		$sesionId_caja= session('id_caja');  
       		//si llega vacia la variable
       		if (empty($sesionId_usuTurno)) {
-      			//var_dump(" se recibe vacias"); 
+      			
       			$this->cerrarCaja($fechaHora,$sesionId_caja,$id_usu);
       			//destruir sesion de caja
       			session()->forget('$sesionId_caja'); 
