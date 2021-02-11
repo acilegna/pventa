@@ -36,7 +36,7 @@
           </select>   
                 
           <div class="modal-footer">                            
-            <button type="submit" class="btn btn-primary" id="registrar" name="registrar" value="regCaja">Continuar con turno</button>
+            <button type="submit" class="btn btn-primary" id="registrar" name="continuar" >Continuar con turno</button>
             <button type="submit" class="btn btn-success" id="cerrarTurno" name="cerrarTurno" value="closeTurno">Cerrar y empezar nuevo turno
                       </button>   
                              

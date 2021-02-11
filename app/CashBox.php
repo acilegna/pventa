@@ -13,8 +13,8 @@ class CashBox extends Model
     //lista blanca atributos que deberían ser asignables en masa
     protected $fillable = ['id_user','descripcion','status'];
 
-    //METODO ORIENTADO A OBJETO
-   	public static function getIdSesion($sesionId_caja){
+    //actualizar status al cerrar caja
+   	public static function updateStatusActive($sesionId_caja){
 		$valor=self::where("id",$sesionId_caja)->update(["status" => "1"]);
         return $valor;
 	}
@@ -32,8 +32,8 @@ class CashBox extends Model
     public static function getBox ($idCaja){
         return self::where('id',$idCaja)->get(); 
     } 
-    public static function updateBoxActive ($idCj){
-        return self::where("id",$idCj)->update(["status" => "1"]);   
+    public static function updateBoxActive ($idCaja){
+        return self::where("id",$idCaja)->update(["status" => "1"]);   
     }
     public static function updateBoxInactive ($id_caja){
         return self::where("id",$id_caja)->update(["status" => "0"]);   

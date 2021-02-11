@@ -56,10 +56,10 @@ class HomeController extends Controller
         case $i >='1':
                 $cantidad=count($resOpen);
                 $datoTurno=array($resOpen,$cantidad);
-                var_dump($datoTurno[1]);
+                //var_dump($datoTurno[1]);
 
                 foreach($datoTurno[0] as $res){
-                var_dump($res->firstname);
+               // var_dump($res->firstname);
         }
               
                 return view('cajas.turnoOpen')->with('datoTurno', $datoTurno);
