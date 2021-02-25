@@ -41,12 +41,12 @@ class HomeController extends Controller
             ->join('cajas', 'cajas.id', '=', 'movimiento_caja.id_caja') 
                                      
             ->select('cajas.descripcion','users.firstname','movimiento_caja.id_usu')
-            ->where ('movimiento_caja.status','=',"abierto")
+            ->where ('movimiento_caja.status','=','abierto')
             ->get();
         //Verificar si la consulta arroja resultados
         $i=count($resOpen);
         //consultar cajas disponibles
-        $cajaClose= CashBox::where("status",1)->get();    
+        $cajaClose= CashBox::where('status',1)->get();    
         switch (true) {
         //si no hay sesiones abiertas
         case $i=='0':
@@ -68,13 +68,7 @@ class HomeController extends Controller
         } 
          
     }
-    public function welcome( ){
-    /*
-      if ($request->input("logins") == "log"){
-        var_dump("expression");
-      } */
-        
-         //return view('home');}
+    public function welcome(){
         return view('panel.panel');
     }
       

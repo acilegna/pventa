@@ -348,10 +348,5 @@
         </div>
     </div>
 </div>
-
-     
-
-
-
 @endsection  
    	

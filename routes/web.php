@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 use App\Caja;
 
 Auth::routes();
@@ -33,9 +34,11 @@ Route::get('/', function () {
 		return view('auth.login')->with('res', $res);
 	}
 	*/
-
 });
-Route::get('/welcome', 'HomeController@welcome')->name('welcome'); 
+//entradas
+Route::get('/entrada', 'EntradasController@viewEntrada')->name('entrada');
+//
+Route::get('/welcome', 'HomeController@welcome')->name('welcome');
 //CAJA
 Route::post('/envia', 'CajaController@envia')->name('envia');
 //Route::post('/inicial', 'CajaController@saveCaja')->name('inicial');
@@ -48,10 +51,10 @@ Route::get('/deleteCj/{id}', 'CajaController@deleteCaja')->name('deleteCj');
 Route::get('/editCj/{id}', 'CajaController@editCajas')->name('editCj');
 Route::post('/saveC', 'CajaController@saveCangecajas')->name('saveC');
 Route::get('/regInicial', 'CajaController@registroIni')->name('regInicial');
- 
+
 Route::get('/turnoOpen', 'CajaController@turnoOpen')->name('turnoOpen');
-Route::post('/verificar', 'CajaController@altaRegistroFin')->name('verificar'); 
- 
+Route::post('/verificar', 'CajaController@altaRegistroFin')->name('verificar');
+
 //PRODUCTOS
 Route::post('/save', 'ProductosController@saveNewProduct')->name('save');
 Route::get('/productos', 'ProductosController@all')->name('productos');
@@ -66,11 +69,11 @@ Route::get('/deletePr/{id}', 'ProductosController@deleteProd')->name('deletePr')
 Route::get('/viewInv/{id}', 'InventariosController@viewInvent')->name('viewInv');
 
 // VENTAS
-Route::get('/viewVents', 'VentasController@viewVentas')->name('viewVents'); 
+Route::get('/viewVents', 'VentasController@viewVentas')->name('viewVents');
 Route::post("/buscarProducto", "VentasController@buscarProducto")->name("buscarProducto");
 
 Route::post("/terminarOCancelarVenta", "VentasController@terminarOCancelarVenta")->name("terminarOCancelarVenta");
-Route::post('/agregaCantidad', 'VentasController@agregarCantidadProducto')->name('agregaCantidad'); 
+Route::post('/agregaCantidad', 'VentasController@agregarCantidadProducto')->name('agregaCantidad');
 Route::post('/addDelete', 'VentasController@agregarOEliminarCantidadProducto')->name('addDelete');
 
 Route::get('/producto', 'VentasController@producto')->name('producto');
@@ -78,11 +81,11 @@ Route::get('/verifica', 'VentasController@verificaPrecio')->name('verifica');
 Route::get('/agrega', 'VentasController@agregaVarios')->name('agrega');
 Route::get('/cobrar', 'VentasController@cobrar')->name('cobrar');
 Route::get('/cobrar', 'VentasController@cobrar')->name('cobrar');
- 
+
 
 //MAYOREO
 Route::get('/mayoreo', 'MayoreoController@viewMayoreo')->name('mayoreo');
-Route::post('/recibe','MayoreoController@recibeDatosmayoreo')->name('recibe');
+Route::post('/recibe', 'MayoreoController@recibeDatosmayoreo')->name('recibe');
 Route::get('/llenar', 'MayoreoController@llenarInput')->name('llenar');
 
 
@@ -93,15 +96,17 @@ Route::get('/actionC', 'ClienteController@action')->name('actionC');
 Route::get('viewFiltroC/{cli_id?}', 'ClienteController@show');
 Route::put('viewFiltroC/{cli_id}', 'ClienteController@update');
 Route::post('viewFiltroC', 'ClienteController@store');
-Route::resource('client','ClientController');
  
+Route::resource('client', 'ClientController');
+
 // REPORTES
 Route::get('/viewReportes', 'ReportController@ViewReportes')->name('viewReportes');
-Route::get('/reporte','ReportController@reporte')->name('reporte');
-Route::post('/pdfs','ReportController@getGenerar')->name('pdfs');
+Route::get('/reporte', 'ReportController@reporte')->name('reporte');
+Route::post('/pdfs', 'ReportController@getGenerar')->name('pdfs');
 
 
-Route::get('pdf','PdfController@getIndex');
-Route::get('pdf/generar','PdfController@getGenerar');
+Route::get('pdf', 'PdfController@getIndex');
+Route::get('pdf/generar', 'PdfController@getGenerar');
 
- 
+
+

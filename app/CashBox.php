@@ -11,7 +11,7 @@ class CashBox extends Model
     public $timestamps = true;
 
     //lista blanca atributos que deberían ser asignables en masa
-    protected $fillable = ['id_user','descripcion','status'];
+    protected $fillable = ['id','descripcion','status'];
 
     //actualizar status al cerrar caja
    	public static function updateStatusActive($sesionId_caja){

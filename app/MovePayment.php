@@ -9,6 +9,24 @@ class MovePayment extends Model
     protected $table = 'movimiento_caja';
     protected $primaryKey = 'id';
     public $timestamps = false;
+     
+   
+    public function setIdCajaAttribute($id_caja) {
+        $this->attributes['id_caja']= $id_caja;
+    }
+    public function setIdUsuAttribute($id_usu) {
+        $this->attributes['id_usu']= $id_usu;
+    }
+    public function setDineroInicialAttribute($inicial) {
+        $this->attributes['dinero_inicial']= $inicial;
+    }
+    public function setInicioEnAttribute($fechaHora) {
+        $this->attributes['inicio_en']= $fechaHora;
+    }
+    public function setStatusAttribute($status) {
+        $this->attributes['status']= $status;
+    }
+
 
     //lista blanca atributos que deberían ser asignables en masa
     protected $fillable = 
@@ -28,6 +46,7 @@ class MovePayment extends Model
             "status" => "cerrado", 
             "termino_en" => $fechaHora]);
     }
+    //obtener datos de la sesion abierta
     public static function getTurnoOpen($sesionUserTurno){
         return self::where("id_usu", "=",$sesionUserTurno)->where("status","=","abierto" )->get();
     }
@@ -43,4 +62,6 @@ class MovePayment extends Model
             "termino_en" => $fechaHora]);
     }
     	 
+
+	 
 }

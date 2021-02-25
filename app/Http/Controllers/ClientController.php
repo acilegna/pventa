@@ -13,7 +13,6 @@ class ClientController extends Controller
 
   if ($request->ajax()) {
           $data = Cliente::latest()->get();
-         // var_dump($data);
           return Datatables::of($data)
                   ->addIndexColumn()
                   ->addColumn('action', function($row){
@@ -48,10 +47,21 @@ class ClientController extends Controller
 
   public function destroy($id)
   {
+    if ($id) {
+   
+   
+     
+      return view('ventas.ventas');
+   }else{
+    return response()->json(['success'=>'ajskdjsakdjak.']);
+   }
+     
+    /*
       Cliente::find($id)->delete();
    
       return response()->json(['success'=>'Product deleted successfully.']);
+      */
   }
-/***********************************************************************************/
+
    }
    
