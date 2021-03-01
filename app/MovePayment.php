@@ -24,7 +24,7 @@ class MovePayment extends Model
         $this->attributes['inicio_en']= $fechaHora;
     }
     public function setStatusAttribute($status) {
-        $this->attributes['status']= $status;
+        $this->attributes['status']= ucfirst($status);
     }
 
 

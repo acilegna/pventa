@@ -174,6 +174,7 @@
                 </div>
                 <!-- /.sidebar -->
             </aside>
+            @yield('javascript')
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <main class="py-4"> @yield('content') </main>
@@ -456,7 +457,7 @@
 
     <!-- all Cajas -->
     <script>
-        $(document).ready(function() {
+    $(document).ready(function() {
         fetch_customer_data();
 
         function fetch_customer_data(query = '') {
@@ -468,7 +469,13 @@
                 },
                 dataType: 'json',
                 success: function(data) {
-                    $('#cajabody').html(data.table_data);
+                    /*
+                    var arreglo =JSON.parse(data)
+                    for (var row=0; row<arreglo.length; row++){
+                        var todo='<tr><td>'+arreglo[row].descripcion'</td></tr>';
+                    }*/
+                   $('#cajabody').html(data.table_data);
+            
                     $('#total_cajas').text(data.total_data);
                 }
             })
@@ -478,7 +485,7 @@
             fetch_customer_data(query);
         });
     });
-    </script>
+    </script> 
 
 
     <!--precio venta -->

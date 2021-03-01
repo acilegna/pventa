@@ -38,7 +38,7 @@ class CajaController extends Controller{
         if ($cajas->id != null){
 			$cajas->delete();			
 			return redirect()->route('allcaja')->with([
-				'mensaje' => 'Caja eliminada csorrectamente!!',
+				'mensaje' => 'Caja eliminada correctamente!!',
 				'tipo' => 'info'
 			]);
         }  else {
@@ -75,6 +75,7 @@ class CajaController extends Controller{
 	    if($request->ajax())	    {
 	    	$output = '';
 	      	$query = $request->get('query');
+			
 	      	if($query != '')
 	      	{
 	        	//hace el filtro
@@ -84,32 +85,21 @@ class CajaController extends Controller{
 	        {
 	            //muestra todos los datos
 	            $data = CashBox::getAll();
+				 
 	        }
 	      	$total_row = $data->count();
-	      	if($total_row > 0)
-	      	{
-	        	foreach($data as $row)
-	        	{
-	          		$output .= '
-	            	<tr>	               
-	              		<td>'.$row->descripcion.'</td>
-	              		<td>'.$row->status.'</td>	               
-	              		<td>
-	                		<a data-toggle="tooltip" data-placement="right" title="Editar" href="./editCj/'.$row->id.'"><span class="glyphicon glyphicon-pencil borde-edit" aria-hidden="true" ></span></a>
-
-	                		<a data-toggle="tooltip" data-placement="right" title="Eliminar" href="./deleteCj/'.$row->id.'"><span class="glyphicon glyphicon-trash borde-delete" aria-hidden="true" ></span> </a>
-	                	</td>
-	            	</tr>';
-	          	}
-	        }
-	        else
-	        {
-	         	$output = '<tr><td align="center" colspan="5">No Data Found</td></tr>';
-	        }
+			 
+				$output =$data;
+		 
+   
 	        	$data = array(
 	       			'table_data'  => $output,
-	       			'total_data'  => $total_row);
-	        		echo json_encode($data);
+	       			'total_data'  => $total_row); 
+				 	//echo json_encode($data); 
+					  return response(json_encode($data),200)->header('Content-type','text/plain');
+				             
+			
+					
 	    }
 	}
 
@@ -138,21 +128,18 @@ class CajaController extends Controller{
 		}else{
 			$total_venta;
 		}	
-		 
-		$suma=$inicial+$total_venta;
-		$status='abierto';
 		//Crear registro.
-		$movimientos = new MovePayment;		 
-		$movimientos->setIdCajaAttribute($id_caja);
-		$movimientos->setIdUsuAttribute($id_usu);		 
-		$movimientos->setDineroInicialAttribute($inicial);
-		$movimientos->setStatusAttribute($status);
-		$movimientos->setInicioEnAttribute($fechaHora);		 
-		$movimientos->save(); 
+		$status='abierto';
+		$data=[
+			 'id_caja'=>$id_caja,
+			 'id_usu'=>$id_usu,
+			 'dinero_inicial'=>$inicial,
+			 'status'=>$status,
+			 'inicio_en'=>$fechaHora
+		];
+		MovePayment::create($data);  
 	}
 
-    
-  
  	public function turnoOpen(){
  		return view('cajas.turnoOpen'); 
  	}
@@ -214,7 +201,6 @@ class CajaController extends Controller{
 				'id_user'=>$id_user,
 				'id_mov'=>$id_mov,
 				'fechaHora'=>$fechaHora];
-				var_dump($data);
 				 
 			MoveClosing::create($data);
 			return view('cajas.registroFinal')->with('alert'); 
@@ -258,7 +244,7 @@ class CajaController extends Controller{
 		foreach ($consultaMovcaja as $key => $value) {}
 		$idCaja=$value->id_caja; 
         $caja = CashBox::updateBoxActive($idCaja);		
-		$Movcaja= MovePayment::updateTurnoOpen($sesionUserTurno, $efectivoCaja=0, $fechaHora);	
+		$Movcaja= MovePayment::updateTurnoOpen($sesionId_usuTurno, $efectivoCaja=0, $fechaHora);	
  	}
     	 
 	public function operacionCaja(Request $request){		  
