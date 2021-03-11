@@ -49,7 +49,9 @@ class MayoreoController extends Controller
   {
     $id = $datos['id_prod'];
     $precio_mayoreo = $datos['p_mayoreo'];
-    $consulta = DB::table('productos')->where('id', '=', $id)->get();
+    //$consulta = DB::table('productos')->where('id', '=', $id)->get();
+    $consulta = Product::getProducts($id);
+
     foreach ($consulta as  $value) {
       $precio_venta = $value->p_venta;
     }

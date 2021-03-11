@@ -96,8 +96,10 @@ Route::get('/actionC', 'ClienteController@action')->name('actionC');
 Route::get('viewFiltroC/{cli_id?}', 'ClienteController@show');
 Route::put('viewFiltroC/{cli_id}', 'ClienteController@update');
 Route::post('viewFiltroC', 'ClienteController@store');
- 
+
 Route::resource('client', 'ClientController');
+Route::get('/viewClientes', 'ClientController@index')->name('viewClientes');
+Route::get('/deleteClients', 'ClientController@destroy')->name('deleteClients');
 
 // REPORTES
 Route::get('/viewReportes', 'ReportController@ViewReportes')->name('viewReportes');
@@ -107,6 +109,3 @@ Route::post('/pdfs', 'ReportController@getGenerar')->name('pdfs');
 
 Route::get('pdf', 'PdfController@getIndex');
 Route::get('pdf/generar', 'PdfController@getGenerar');
-
-
-

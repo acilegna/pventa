@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use DataTables;
+use App\Cliente;
 
 /*
 |--------------------------------------------------------------------------

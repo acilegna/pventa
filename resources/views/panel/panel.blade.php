@@ -47,14 +47,15 @@
                     <!-- Sidebar user panel (optional) -->
                     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                         <div class="image">
-                            <img src="{{ asset('images/faces.png') }}" aclass="img-circle elevation-2" alt="User Image">
+                            <img src="{{ asset('images/faces.png') }}" aclass="img-circle elevation-2"
+                                alt="User Image">
                         </div>
                         <div class="info">
 
                             @if (Route::has('login'))
-                            @auth
-                            <a href="#" class="d-block">{{Auth()->user()->firstname}}</a>
-                            @endauth
+                                @auth
+                                    <a href="#" class="d-block">{{ Auth()->user()->firstname }}</a>
+                                @endauth
                             @endif
                         </div>
                     </div>
@@ -84,7 +85,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('mayoreo')}}" class="nav-link">
+                                <a href="{{ route('mayoreo') }}" class="nav-link">
                                     <i class="nav-icon fa fa-tags"></i>
                                     <p>
                                         Mayoreo
@@ -101,7 +102,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('client.index') }}" class="nav-link">
+                                <a href="{{ route('client.index') }}" class="nav-link">
                                     <i class="nav-icon fa fa-users"></i>
                                     <p>
                                         Clientes
@@ -118,7 +119,7 @@
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="{{route('viewReportes')}}" class="nav-link">
+                                        <a href="{{ route('viewReportes') }}" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Reporte de Ventas</p>
                                         </a>
@@ -138,7 +139,7 @@
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('allcaja') }}" class="nav-link">
+                                <a href="{{ route('allcaja') }}" class="nav-link">
                                     <i class="nav-icon fa fa-boxes"></i>
                                     <p>
                                         Cajas
@@ -187,7 +188,7 @@
                             </div>
                             <div class="modal-body">
 
-                                <form action="{{url('caja')}}" method="POST" class="form-horizontal">
+                                <form action="{{ url('caja') }}" method="POST" class="form-horizontal">
                                     @csrf
                                     <label for="name" class="col-sm-12 control-label text-center">Efectivo Inicial en
                                         Caja</label>
@@ -218,7 +219,7 @@
                             </div>
                             <div class="modal-body">
 
-                                <form action="{{url('caja')}}" method="POST" class="form-horizontal">
+                                <form action="{{ url('caja') }}" method="POST" class="form-horizontal">
                                     @csrf
                                     <label for="name" class="col-sm-12 control-label text-center">Registro de entradas
                                         efectivo</label>
@@ -256,462 +257,173 @@
     <!-- Caja -->
     <script>
         $(document).ready(function() {
-        $('.exit').click(function() {
-            $('#cajaModel').modal("show");
-            $('#modelHeading').html("Salir de Punto de Venta");
+            $('.exit').click(function() {
+                $('#cajaModel').modal("show");
+                $('#modelHeading').html("Salir de Punto de Venta");
+            });
         });
-    });
+
     </script>
-    <!--- -->
 
     <!-- Entradas -->
     <script>
         $(document).ready(function() {
-        $('.entradaEfectiv').click(function() {
-            $('#entradaModel').modal("show");
-            $('#modelHeading').html("Salir de Punto de Venta");
+            $('.entradaEfectiv').click(function() {
+                $('#entradaModel').modal("show");
+                $('#modelHeading').html("Salir de Punto de Venta");
+            });
         });
-    });
+
     </script>
     <!-- Fin -->
 
 
-    <!-- Verificador -->
-    <script>
-        $(document).ready(function() {
-        $('#verificadorb').click(function() {
-            $('#txtverificador').val('');
-            $('#tbodyVs').text("$0.00");
-            $('#verificador').modal('show');
-        });
-
-        fetch_customer_data();
-
-        function fetch_customer_data(query = '') {
-            $.ajax({
-                url: "{{ route('verifica') }}",
-                type: "GET",
-                data: {
-                    query: query
-                },
-                dataType: 'json',
-                success: function(data) {
-                    $('#tbodyVs').html(data.table_datos);
-                    $('#total').text(data.total_datos);
-                }
-            })
-        }
-
-        $(document).on('keyup', '#txtverificador', function() {
-            var query = $(this).val();
-            fetch_customer_data(query);
-            if ($("#txtverificador").val().length < 4) {
-                $('#tbodyVs').text("$0.00");
-            }
-        });
-    });
-    </script>
-
     <!--Rellenar Combo -->
     <script>
         $(document).ready(function() {
-        fetch_customer_data();
+            fetch_customer_data();
 
-        function fetch_customer_data(query = '') {
-            $.ajax({
-                url: "{{ route('llenar') }}",
-                type: "GET",
-                data: {
-                    query: query
-                },
-                dataType: 'json',
-                success: function(data) {
-                    $('#precioP').val(data.table_datos);
-                    $('#total').text(data.total_datos);
-                }
-            })
-        }
-
-        $(document).on('change', '#descripcion', function() {
-            var query = $(this).val();
-            fetch_customer_data(query);
-        });
-    });
-    </script>
-
-    <!-- Varios -->
-    <script>
-        $(document).ready(function() {
-        $('#varios').click(function() {
-            $('#txtbusca').val('');
-            $('#cantidad').val('');
-            $('#mensaje').text("");
-            $('#mensaje').removeClass("alert alert-danger");
-
-            $('#price').text("");
-            $('#variosProd').modal('show');
-        });
-        fetch_customer_data();
-
-        function fetch_customer_data(query = '') {
-            $.ajax({
-                url: "{{ route('agrega') }}",
-                type: "GET",
-                data: {
-                    query: query
-                },
-                dataType: 'json',
-                success: function(data) {
-                    $('#price').html(data.table_datos);
-                    $('#total').text(data.total_datos);
-                }
-            })
-        }
-        $(document).on('keyup', '#txtbusca', function() {
-            var query = $(this).val();
-            fetch_customer_data(query);
-            if ($("#txtbusca").val().length < 4) {
-                $('#price').text("");
+            function fetch_customer_data(query = '') {
+                $.ajax({
+                    url: "{{ route('llenar') }}",
+                    type: "GET",
+                    data: {
+                        query: query
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#precioP').val(data.table_datos);
+                        $('#total').text(data.total_datos);
+                    }
+                })
             }
+
+            $(document).on('change', '#descripcion', function() {
+                var query = $(this).val();
+                fetch_customer_data(query);
+            });
         });
 
-        $("#cantidad").keyup(function() {
-            var cantidad = parseInt($("#cantidad").val());
-            var existencia = parseInt($("#existe").val());
-            if (cantidad > existencia) {
-                $('#agregarVarios').attr("disabled", true);
-                $("#mensaje").addClass("alert alert-danger");
-                $('#mensaje').text(
-                    "No se pueden agregar más productos de este tipo, se quedarían sin existencia");
-            } else {
-                $('#agregarVarios').attr("disabled", false);
-                $('#mensaje').text("");
-                $('#mensaje').removeClass("alert alert-danger");
-
-            }
-        });
-    });
     </script>
-
-    <!-- ventas -->
-    <script>
-        $(document).ready(function() {
-        $('#busquedas').click(function() {
-            $('#modelHeading').html("Busqueda de Productos");
-            $('#busca').val('');
-            $('#tbodyV').html("");
-            $('#ajaxModel').modal('show');
-        });
-
-        fetch_customer_data();
-
-        function fetch_customer_data(query = '') {
-            $.ajax({
-                url: "{{ route('producto') }}",
-                type: "GET",
-                data: {
-                    query: query
-                },
-                dataType: 'json',
-                success: function(data) {
-                    $('#tbodyV').html(data.table_data);
-                    $('#total_recordsV').text(data.total_data);
-                }
-            })
-        }
-        $(document).on('keyup', '#busca', function() {
-            var query = $(this).val();
-            fetch_customer_data(query);
-            if ($("#busca").val().length < 4) {
-                $('#tbodyV').html("");
-            }
-        });
-    });
-    </script>
-
-    <!-- Productos -->
-    <script>
-        $(document).ready(function() {
-        fetch_customer_data();
-
-        function fetch_customer_data(query = '') {
-            $.ajax({
-                url: "{{ route('action') }}",
-                method: 'GET',
-                data: {
-                    query: query
-                },
-                dataType: 'json',
-                success: function(data) {
-                    $('#tbody').html(data.table_data);
-                    $('#total_records').text(data.total_data);
-                }
-            })
-        }
-        $(document).on('keyup', '#search', function() {
-            var query = $(this).val();
-            fetch_customer_data(query);
-        });
-    });
-    </script>
-
-    <!-- all Cajas -->
-    <script>
-    $(document).ready(function() {
-        fetch_customer_data();
-
-        function fetch_customer_data(query = '') {
-            $.ajax({
-                url: "{{ route('cajasAjax') }}",
-                method: 'GET',
-                data: {
-                    query: query
-                },
-                dataType: 'json',
-                success: function(data) {
-                    /*
-                    var arreglo =JSON.parse(data)
-                    for (var row=0; row<arreglo.length; row++){
-                        var todo='<tr><td>'+arreglo[row].descripcion'</td></tr>';
-                    }*/
-                   $('#cajabody').html(data.table_data);
-            
-                    $('#total_cajas').text(data.total_data);
-                }
-            })
-        }
-        $(document).on('keyup', '#search', function() {
-            var query = $(this).val();
-            fetch_customer_data(query);
-        });
-    });
-    </script> 
 
 
     <!--precio venta -->
     <script>
         $(document).ready(function() {
-        $("#inputGanancia").keyup(function() {
-            var Precioc = document.getElementById("inputPrecioc").value;
-            Ganancia = $(this).val(); // initialization in an inner scope
-            Resultado = (parseFloat(Ganancia) + parseFloat(Precioc));
-            $("#inputPreciov").val(Resultado);
-        });
+            $("#inputGanancia").keyup(function() {
+                var Precioc = document.getElementById("inputPrecioc").value;
+                Ganancia = $(this).val(); // initialization in an inner scope
+                Resultado = (parseFloat(Ganancia) + parseFloat(Precioc));
+                $("#inputPreciov").val(Resultado);
+            });
 
-        $("#inputPrecioc").change(function() {
-            var Ganancia = document.getElementById("inputGanancia").value;
-            Precioc = $(this).val(); // initialization in an inner scope
-            Resultado = (parseFloat(Precioc) + parseFloat(Ganancia));
-            $("#inputPreciov").val(Resultado);
-        });
-    });
-    </script>
-    <!-- JS Clientes-->
-    <script type="text/javascript">
-        $(function() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        var table = $('.data-table').DataTable({
-            "oLanguage": {
-                "sLengthMenu": "_MENU_ Entradas por paginas",
-                "sInfo": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                "sInfoEmpty": "Mostrando 0 to 0 of 0 registros",
-                "sInfoFiltered": "(Filtrado de _MAX_ registros totales)",
-                "sSearch": "Buscar:",
-                "sZeroRecords": "0 Registros encontrados",
-                "sProcessing": "Procesando...",
-            },
-            processing: true,
-            serverSide: true,
-            "aLengthMenu": [5, 10, 15],
-            ajax: "{{ route('client.index') }}",
-            columns: [{
-                    data: 'DT_RowIndex',
-                    name: 'DT_RowIndex'
-                },
-                {
-                    data: 'nombre',
-                    name: 'nombre'
-                },
-                {
-                    data: 'apellidos',
-                    name: 'apellidos'
-                },
-                {
-                    data: 'telefono',
-                    name: 'telefono'
-                },
-                {
-                    data: 'direccion',
-                    name: 'direccion'
-                },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false,
-                    searchable: false
-                },
-            ]
-        });
-
-        $('#createNewProduct').click(function() {
-            $('#saveBtn').val("create-product");
-            $('#product_id').val('');
-            $('#productForm').trigger("reset");
-            $('#modelHeading').html("Crear nuevo cliente");
-            $('#ajaxModel').modal('show');
-        });
-
-        $('body').on('click', '.editProduct', function() {
-            var product_id = $(this).data('id');
-            $.get("{{ route('client.index') }}" + '/' + product_id + '/edit', function(data) {
-                $('#modelHeading').html("Edit Product");
-                $('#saveBtn').val("edit-user");
-                $('#ajaxModel').modal('show');
-                $('#product_id').val(data.id);
-                $('#nombre').val(data.nombre);
-                $('#apellidos').val(data.apellidos);
-                $('#direccion').val(data.direccion);
-                $('#telefono').val(data.telefono);
-            })
-        });
-
-        $('#saveBtn').click(function(e) {
-            e.preventDefault();
-            $(this).html('Sending..');
-            $.ajax({
-                data: $('#productForm').serialize(),
-                url: "{{ route('client.store') }}",
-                type: "POST",
-                dataType: 'json',
-                success: function(data) {
-                    $('#productForm').trigger("reset");
-                    $('#ajaxModel').modal('hide');
-                    table.draw();
-                },
-                error: function(data) {
-                    console.log('Error:', data);
-                    $('#saveBtn').html('Save Changes');
-                }
+            $("#inputPrecioc").change(function() {
+                var Ganancia = document.getElementById("inputGanancia").value;
+                Precioc = $(this).val(); // initialization in an inner scope
+                Resultado = (parseFloat(Precioc) + parseFloat(Ganancia));
+                $("#inputPreciov").val(Resultado);
             });
         });
 
-        $('body').on('click', '.deleteProduct', function() {
-            var product_id = $(this).data("id");
-            confirm("Are You sure want to delete !");
-            $.ajax({
-                type: "DELETE",
-                url: "{{ route('client.store') }}" + '/' + product_id,
-                success: function(data) {
-                    table.draw();
-                },
-                error: function(data) {
-                    console.log('Error:', data);
-                }
-            });
-        });
-    });
     </script>
 
     <!-- JS Reportes-->
     <script>
         //Código a ejecutar cuando se carga la página 
-    $(document).ready(function() {
-        fetch_customer_data();
-        $(function() {
-            $("#datepicker").datepicker({
-                dateFormat: 'yy/mm/dd'
+        $(document).ready(function() {
+            fetch_customer_data();
+            $(function() {
+                $("#datepicker").datepicker({
+                    dateFormat: 'yy/mm/dd'
+                });
+                $("#datepicker_2").datepicker({
+                    dateFormat: 'yy/mm/dd'
+                });
             });
-            $("#datepicker_2").datepicker({
-                dateFormat: 'yy/mm/dd'
+
+            function fetch_customer_data(date1 = '', date2 = '', sale_by = '') {
+                $.ajax({
+                    url: "{{ route('reporte') }}",
+                    method: 'GET',
+                    data: {
+                        date1: date1,
+                        date2: date2,
+                        sale_by: sale_by
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#tbody_re').html(data.table_data);
+                        $('#plantilla').html(data.table_data);
+                        $('#t_re ').text(data.total_data);
+                    }
+                })
+            }
+
+            $(document).on('change', '#datepicker', function() {
+                //referencia al elemento que se le está aplicando el evento.
+                //var date1 = $(this).val();
+                var sale_by = $("#sale_by").val();
+                var date1 = $("#datepicker").val();
+                var date2 = $("#datepicker_2").val();
+                //pasar parametro a la funcion
+                fetch_customer_data(date1, date2, sale_by);
             });
-        });
 
-        function fetch_customer_data(date1 = '', date2 = '', sale_by = '') {
-            $.ajax({
-                url: "{{ route('reporte') }}",
-                method: 'GET',
-                data: {
-                    date1: date1,
-                    date2: date2,
-                    sale_by: sale_by
-                },
-                dataType: 'json',
-                success: function(data) {
-                    $('#tbody_re').html(data.table_data);
-                    $('#plantilla').html(data.table_data);
-                    $('#t_re ').text(data.total_data);
-                }
-            })
-        }
+            $(document).on('change', '#datepicker_2', function() {
 
-        $(document).on('change', '#datepicker', function() {
-            //referencia al elemento que se le está aplicando el evento.
-            //var date1 = $(this).val();
-            var sale_by = $("#sale_by").val();
-            var date1 = $("#datepicker").val();
-            var date2 = $("#datepicker_2").val();
-            //pasar parametro a la funcion
-            fetch_customer_data(date1, date2, sale_by);
-        });
+                var sale_by = $("#sale_by").val();
+                var date1 = $("#datepicker").val();
+                var date2 = $("#datepicker_2").val();
+                //pasar parametro a la funcion
+                fetch_customer_data(date1, date2, sale_by);
+            });
 
-        $(document).on('change', '#datepicker_2', function() {
+            $(document).on('change', '#sale_by', function() {
+                //referencia al elemento que se le está aplicando el evento.          
+                var sale_by = $(this).val();
+                var date1 = $("#datepicker").val();
+                var date2 = $("#datepicker_2").val();
+                //pasar parametro a la funcion
+                fetch_customer_data(date1, date2, sale_by);
 
-            var sale_by = $("#sale_by").val();
-            var date1 = $("#datepicker").val();
-            var date2 = $("#datepicker_2").val();
-            //pasar parametro a la funcion
-            fetch_customer_data(date1, date2, sale_by);
-        });
-
-        $(document).on('change', '#sale_by', function() {
-            //referencia al elemento que se le está aplicando el evento.          
-            var sale_by = $(this).val();
-            var date1 = $("#datepicker").val();
-            var date2 = $("#datepicker_2").val();
-            //pasar parametro a la funcion
-            fetch_customer_data(date1, date2, sale_by);
+            });
 
         });
 
-    });
     </script>
 
     <!-- Cobrar -->
 
     <script>
         $(document).ready(function() {
-        $('#cobrar').click(function() {
-            $('#modalCobro').modal('show');
-
-        });
-        fetch_customer_data();
-
-        function fetch_customer_data() {
-            $.ajax({
-                url: "{{ route('cobrar') }}",
-                type: "GET",
-                data: {},
-                dataType: 'json',
-                success: function(data) {
-                    $('#total_pagar').text(data.total_pagar);
-                    $('#pago').val(data.total_pagar);
-                    $('#articulos').text(data.total_articulos);
-                }
-            })
-            $("#pago").keyup(function() {
-                var pagoCon = document.getElementById("pago").value;
-                var total = $("#total_pagar").text();
-                Resultado = (parseFloat(pagoCon) - parseFloat(total));
-                $('#cambio').val(Resultado);
+            $('#cobrar').click(function() {
+                $('#modalCobro').modal('show');
 
             });
-        }
-    });
+            fetch_customer_data();
+
+            function fetch_customer_data() {
+                $.ajax({
+                    url: "{{ route('cobrar') }}",
+                    type: "GET",
+                    data: {},
+                    dataType: 'json',
+                    success: function(data) {
+                        $('#total_pagar').text(data.total_pagar);
+                        $('#pago').val(data.total_pagar);
+                        $('#articulos').text(data.total_articulos);
+                    }
+                })
+                $("#pago").keyup(function() {
+                    var pagoCon = document.getElementById("pago").value;
+                    var total = $("#total_pagar").text();
+                    Resultado = (parseFloat(pagoCon) - parseFloat(total));
+                    $('#cambio').val(Resultado);
+
+                });
+            }
+        });
+
     </script>
 </body>
 
