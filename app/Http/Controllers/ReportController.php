@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use App\Sell;
-use App\Product;
-use DB;
+use App\SellProduct;
 use Mpdf\Mpdf;
-//use DataTables;
+
 class ReportController extends Controller
 {
 	public function ViewReportes()
@@ -25,45 +23,19 @@ class ReportController extends Controller
 			$date2 = $request->get('date2');
 			$user =  $request->get('sale_by');
 
-			$date3 = '2020-09-01';
-			$date4 = '2020-09-23';
 
 			if ($date1 != '' and $date2 != '' and $user != '') {
-				$data = DB::table('productos_vendidos')
-					->join('users', 'users.id_employee', '=', 'productos_vendidos.id_user')
-					->join('ventas', 'ventas.id', '=', 'productos_vendidos.id_venta')
-					->join('productos', 'productos.id', '=', 'productos_vendidos.id_producto')
-					->select('ventas.id', 'ventas.fecha', 'users.firstname', 'productos.p_venta', 'productos_vendidos.cantidad', 'ventas.total', 'productos.descripcion')
-					->where('users.id_employee', '=', $user)
-					->whereBetween('ventas.fecha', [$date1, $date2])
-					->get();
+				$data = SellProduct::sellProductByUser($user, $date1, $date2);
 			}
 			if ($date1 != '' and $date2 != '' and $user == 'all') {
-				$data = DB::table('productos_vendidos')
-					->join('users', 'users.id_employee', '=', 'productos_vendidos.id_user')
-					->join('ventas', 'ventas.id', '=', 'productos_vendidos.id_venta')
-					->join('productos', 'productos.id', '=', 'productos_vendidos.id_producto')
-					->select('ventas.id', 'ventas.fecha', 'users.firstname', 'productos.p_venta', 'productos_vendidos.cantidad', 'ventas.total', 'productos.descripcion')
-					->whereBetween('ventas.fecha', [$date1, $date2])
-					->get();
+				$data = SellProduct::sellProducts($date1, $date2);
 			}
 			if (isset($data)) {
 				$total_row = $data->count();
 				if ($total_row > 0) {
-					foreach ($data as $row) {
-						$output .= '
-			            <tr>
-			              <td>' . $row->id . '</td>
-			              <td>' . $row->fecha . '</td>
-			              <td>' . $row->firstname . '</td>
-			              <td>' . $row->p_venta . '</td>  
-			              <td>' . $row->cantidad . '</td>   
-			              <td>' . $row->total . '</td> 
-			              <td>' . $row->descripcion . '</td>            
-			            </tr>';
-					}
+					$output = $data;
 				} else {
-					$output = '<tr><td align="center" colspan="5">No Data Found</td></tr>';
+					$output = ['No se encuentran  registros'];
 				}
 				$data = array(
 					'table_data'  => $output,
@@ -84,23 +56,10 @@ class ReportController extends Controller
 		$user = $request->sale_by;
 
 		if ($date1 != '' and $date2 != '' and $user != '') {
-			$datos = DB::table('productos_vendidos')
-				->join('users', 'users.id_employee', '=', 'productos_vendidos.id_user')
-				->join('ventas', 'ventas.id', '=', 'productos_vendidos.id_venta')
-				->join('productos', 'productos.id', '=', 'productos_vendidos.id_producto')
-				->select('ventas.id', 'ventas.fecha', 'users.firstname', 'productos.p_venta', 'productos_vendidos.cantidad', 'ventas.total', 'productos.descripcion')
-				->where('users.id_employee', '=', $user)
-				->whereBetween('ventas.fecha', [$date1, $date2])
-				->get();
+			$datos = SellProduct::sellProductByUser($user, $date1, $date2);
 		}
 		if ($date1 != '' and $date2 != '' and $user == 'all') {
-			$datos = DB::table('productos_vendidos')
-				->join('users', 'users.id_employee', '=', 'productos_vendidos.id_user')
-				->join('ventas', 'ventas.id', '=', 'productos_vendidos.id_venta')
-				->join('productos', 'productos.id', '=', 'productos_vendidos.id_producto')
-				->select('ventas.id', 'ventas.fecha', 'users.firstname', 'productos.p_venta', 'productos_vendidos.cantidad', 'ventas.total', 'productos.descripcion')
-				->whereBetween('ventas.fecha', [$date1, $date2])
-				->get();
+			$datos = SellProduct::sellProducts($date1, $date2);
 		}
 
 		$fechas = array($date1, $date2);
@@ -115,7 +74,6 @@ class ReportController extends Controller
 
 	public function Pdf($datos, $fechas)
 	{
-		//$total_row = $datos->count();
 
 		$fecha_1 = $fechas[0];
 		$fecha_2 = $fechas[1];
@@ -130,10 +88,10 @@ class ReportController extends Controller
 			]),
 			'fontdata' => $fontData + [
 				'arial' => [
-					'R' => 'arial.ttf',
+					'R' => 'FreeSerif.ttf',
 				],
 			],
-			'default_font' => 'arial',
+			'default_font' => 'FreeSerif',
 			// "format" => "A4",
 			"format" => [264.8, 188.9],
 		]);

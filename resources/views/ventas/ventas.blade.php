@@ -11,7 +11,7 @@
 
                         <div class="form-group">
                             <div class="input-group mb-3">
-                                <input id="codigo" autocomplete="off" required autofocus name="codigo" type="text"
+                                <input id="codigo" autocomplete="off" required autofocus name="codigoProducto" type="text"
                                     class="form-control" placeholder="Ingresa el codigo..">
 
                                 <div class="input-group-append">
@@ -81,6 +81,7 @@
 
                         @foreach (session('productos') as $producto)
                             @php
+                                $id_prod = 'NULL';
                                 $cantidad_p = $producto->cantidad;
                                 $id_agregado = $producto->id;
                                 $mayoreos = $producto->mayoreo;
@@ -97,9 +98,11 @@
                                 @endif
                             @endforeach
 
-                            {{-- IMPORTANTE revisar este error con id_prod}}							
-					{{--inicio para productos que no se registro mayoreo --}}
-                            @if ($id_prod != $id_agregado and $total[1] == 1)
+
+                            {{-- inicio para productos que no se registro mayoreo --}}
+
+
+                            @if ($id_prod == 'NULL' and $total[1] == 1)
                                 @php
                                     $cantidad_mayoreo = 999;
                                     $cantidad_p == $cantidad_mayoreo;

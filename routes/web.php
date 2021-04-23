@@ -41,7 +41,6 @@ Route::get('/entrada', 'EntradasController@viewEntrada')->name('entrada');
 Route::get('/welcome', 'HomeController@welcome')->name('welcome');
 //CAJA
 Route::post('/envia', 'CajaController@envia')->name('envia');
-//Route::post('/inicial', 'CajaController@saveCaja')->name('inicial');
 Route::post('/caja', 'CajaController@operacionCaja')->name('caja');
 Route::get('/viewcaja', 'CajaController@vistaCaja')->name('viewcaja');
 Route::post('/newcaja', 'CajaController@newCaja')->name('newcaja');
@@ -51,7 +50,6 @@ Route::get('/deleteCj/{id}', 'CajaController@deleteCaja')->name('deleteCj');
 Route::get('/editCj/{id}', 'CajaController@editCajas')->name('editCj');
 Route::post('/saveC', 'CajaController@saveCangecajas')->name('saveC');
 Route::get('/regInicial', 'CajaController@registroIni')->name('regInicial');
-
 Route::get('/turnoOpen', 'CajaController@turnoOpen')->name('turnoOpen');
 Route::post('/verificar', 'CajaController@altaRegistroFin')->name('verificar');
 
@@ -82,12 +80,10 @@ Route::get('/agrega', 'VentasController@agregaVarios')->name('agrega');
 Route::get('/cobrar', 'VentasController@cobrar')->name('cobrar');
 Route::get('/cobrar', 'VentasController@cobrar')->name('cobrar');
 
-
 //MAYOREO
 Route::get('/mayoreo', 'MayoreoController@viewMayoreo')->name('mayoreo');
 Route::post('/recibe', 'MayoreoController@recibeDatosmayoreo')->name('recibe');
 Route::get('/llenar', 'MayoreoController@llenarInput')->name('llenar');
-
 
 //CLIENTES
 Route::get('/viewFiltroC', 'ClienteController@viewFiltro')->name('viewFiltroC');
@@ -96,7 +92,6 @@ Route::get('/actionC', 'ClienteController@action')->name('actionC');
 Route::get('viewFiltroC/{cli_id?}', 'ClienteController@show');
 Route::put('viewFiltroC/{cli_id}', 'ClienteController@update');
 Route::post('viewFiltroC', 'ClienteController@store');
-
 Route::resource('client', 'ClientController');
 Route::get('/viewClientes', 'ClientController@index')->name('viewClientes');
 Route::get('/deleteClients', 'ClientController@destroy')->name('deleteClients');
@@ -106,6 +101,6 @@ Route::get('/viewReportes', 'ReportController@ViewReportes')->name('viewReportes
 Route::get('/reporte', 'ReportController@reporte')->name('reporte');
 Route::post('/pdfs', 'ReportController@getGenerar')->name('pdfs');
 
-
-Route::get('pdf', 'PdfController@getIndex');
-Route::get('pdf/generar', 'PdfController@getGenerar');
+//ENTRADAS Y SALIDAS
+Route::get('/entrada', 'EntradaSalidaController@viewEntrada')->name('entrada');
+Route::post('/save', 'EntradaSalidaController@saveMovimientos')->name('save');

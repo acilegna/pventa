@@ -14,19 +14,19 @@ class CreateProductosVendidosTable extends Migration
     public function up()
     {
         Schema::create('productos_vendidos', function (Blueprint $table) {
-            $table->increments('id');  
+            $table->increments('id');
             $table->integer('id_venta');
             $table->integer('id_user')->default(1);
             $table->integer('id_producto');
-            $table->string('descripcion'); 
-            $table->decimal('precio');   
+            $table->string('descripcion');
+            $table->decimal('precio');
             $table->decimal('cantidad');
-            $table->timestamps();   
+            $table->timestamps();
         });
     }
 
- 
- 
+
+
     /**
      * Reverse the migrations.
      *

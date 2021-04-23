@@ -20,4 +20,12 @@
 <script src="{{ asset('js/searchProduct.js') }}"></script>
 <script src="{{ asset('js/allProductos.js') }}"></script>
 <script src="{{ asset('js/clientes.js') }}"></script>
+<script src="{{ asset('js/reportes.js') }}"></script>
+<script src="{{ asset('js/cobrar.js') }}"></script>
+<script src="{{ asset('js/changePrecio.js') }}"></script>
+<script src="{{ asset('js/rellenarPrecio.js') }}"></script>
+<script src="{{ asset('js/exit.js') }}"></script>
+<script src="{{ asset('js/entrada.js') }}"></script>
+<script src="{{ asset('js/salida.js') }}"></script>
+
 <!-- fin dataTables -->

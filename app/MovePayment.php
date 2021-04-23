@@ -44,7 +44,7 @@ class MovePayment extends Model
 
     public static function updateAll($id_user, $fechaHora)
     {
-        return self::where("id_usu", "=", $id_user)->where("status", "=", "abierto")->update([
+        return self::where("id_usu", "=", $id_user)->where("status", "=", "Abierto")->update([
             "acomulado_ventas" => 0,
             "acomulado_entradas" => 0,
             "acomulado_salidas" => 0,
@@ -58,12 +58,12 @@ class MovePayment extends Model
     //obtener datos de la sesion abierta
     public static function getTurnoOpen($sesionUserTurno)
     {
-        return self::where("id_usu", "=", $sesionUserTurno)->where("status", "=", "abierto")->get();
+        return self::where("id_usu", "=", $sesionUserTurno)->where("status", "=", "Abierto")->get();
     }
 
     public static function updateTurnoOpen($sesionUserTurno, $efectivoCaja, $fechaHora)
     {
-        return self::where("id_usu", "=", $sesionUserTurno)->where("status", "=", "abierto")->update([
+        return self::where("id_usu", "=", $sesionUserTurno)->where("status", "=", "Abierto")->update([
             "acomulado_ventas" => 0,
             "acomulado_entradas" => 0,
             "acomulado_salidas" => 0,
@@ -72,5 +72,24 @@ class MovePayment extends Model
             "status" => "cerrado",
             "termino_en" => $fechaHora
         ]);
+    }
+
+    public static function turnOpen()
+    {
+        return self::join('users', 'users.id_employee', '=', 'movimiento_caja.id_usu')
+            ->join('cajas', 'cajas.id', '=', 'movimiento_caja.id_caja')
+            ->select(
+                'cajas.descripcion',
+                'users.firstname',
+                'movimiento_caja.id',
+                'movimiento_caja.id_usu',
+                'movimiento_caja.id_caja',
+                'movimiento_caja.acomulado_entradas',
+                'movimiento_caja.acomulado_salidas',
+                'movimiento_caja.acomulado_ventas'
+
+            )
+            ->where('movimiento_caja.status', '=', 'Abierto')
+            ->get();
     }
 }

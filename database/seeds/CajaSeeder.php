@@ -12,9 +12,9 @@ class CajaSeeder extends Seeder
     public function run()
     {
         DB::table('cajas')->insert([
-            'descripcion' => 'caja1',
+            'descripcion' => 'caja2',
             'status' => 1,
-             
+
         ]);
     }
 }

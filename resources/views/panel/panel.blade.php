@@ -147,13 +147,14 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link entradaEfectiv">
+                                <a class="nav-link entradaEfectivo">
                                     <i class="nav-icon fa fa-hand-holding-usd"></i>
                                     <p>Entradas</p>
                                 </a>
                             </li>
+
                             <li class="nav-item">
-                                <a href="pages/charts/flot.html" class="nav-link">
+                                <a class="nav-link salidaEfectivo">
                                     <i class="nav-icon fa fa-folder-minus"></i>
                                     <p>Salidas</p>
                                 </a>
@@ -169,6 +170,7 @@
 
                             </li>
                             <!-- salir -->
+
                         </ul>
                     </nav>
                     <!-- /.sidebar-menu -->
@@ -176,10 +178,119 @@
                 <!-- /.sidebar -->
             </aside>
             @yield('javascript')
+
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <main class="py-4"> @yield('content') </main>
-                <!-- MODAL  CAJA -->
+                <!-- MODAL   -->
+                <div class="modal fade" id="modalEntradas" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="headingEntradas"></h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <form action='{{ route('save') }}' method="post">
+                                        @csrf
+                                        <div class="row">
+                                            <div class="col-8">
+
+                                                <div class="row">
+                                                    <div class="col-md-12 text-center">
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">Cantidad</span>
+                                                            <span class="input-group-text">$</span>
+                                                            <input name="cantidadEntrada" id="cantidadEntrada"
+                                                                class="form-control" type="number">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12 text-center">
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">Comentarios</span>
+
+                                                            <input id="comentario" name="comentario" type="text"
+                                                                class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <button class="btn btn-outline-success" type="submit" name="saveEntrada"
+                                                    id="saveEntrada" value="entrada">Guardar</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                                    id="Btncancela">Cancelar </button>
+
+
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- FIN  MODAL  ENTRADAS-->
+
+                <!-- MODAL SALIDAS   -->
+                <div class="modal fade" id="modalSalidas" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="headingSalida"></h5>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container-fluid">
+                                    <form action='{{ route('save') }}' method="post">
+                                        @csrf
+                                        <div class="row">
+                                            <div class="col-8">
+
+                                                <div class="row">
+                                                    <div class="col-md-12 text-center">
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">Cantidad</span>
+                                                            <span class="input-group-text">$</span>
+                                                            <input name="cantidadEntrada" id="cantidadEntrada"
+                                                                class="form-control" type="number">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12 text-center">
+                                                        <div class="input-group">
+                                                            <span class="input-group-text">Comentarios</span>
+
+                                                            <input id="comentario" name="comentario" type="text"
+                                                                class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <button class="btn btn-outline-success" type="submit" name="saveSalida"
+                                                    id="saveSalida" value="salida">Guardar</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                                    id="Btncancela">Cancelar </button>
+
+
+                                            </div>
+                                        </div>
+
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- FIN  MODAL   CAJA -->
+
+                <!-- MODAL  EXIT -->
                 <div class="modal fade" id="cajaModel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -190,8 +301,7 @@
 
                                 <form action="{{ url('caja') }}" method="POST" class="form-horizontal">
                                     @csrf
-                                    <label for="name" class="col-sm-12 control-label text-center">Efectivo Inicial en
-                                        Caja</label>
+                                    <label for="name" class="col-sm-12 control-label text-center">COMENTARIO</label>
 
                                     <div class="modal-footer col-sm-6">
                                         <button type="submit" class="btn btn-primary" id="cerrar" name="cerrar"
@@ -210,36 +320,7 @@
                     </div>
                 </div>
                 <!-- FIN  MODAL   CAJA -->
-                <!-- MODAL  entradas-->
-                <div class="modal fade" id="entradaModel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="modelHeading"></h5>
-                            </div>
-                            <div class="modal-body">
 
-                                <form action="{{ url('caja') }}" method="POST" class="form-horizontal">
-                                    @csrf
-                                    <label for="name" class="col-sm-12 control-label text-center">Registro de entradas
-                                        efectivo</label>
-
-                                    <div class="modal-footer col-sm-6">
-                                        <button type="submit" class="btn btn-primary" id="cerrar" name="cerrar"
-                                            value="close">Guardar
-                                        </button>
-                                    </div>
-
-                                    <div class="modal-footer col-sm-6">
-                                        <button type="submit" class="btn btn-primary" id="mantener" name="mantener"
-                                            value="open">cancelar
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div> <!-- FIN  MODAL   entradas -->
 
             </div> <!-- Fin Contains page content -->
             @include('panel.footer')
@@ -253,178 +334,6 @@
     </div>
     <!-- ./app -->
     @include('includes.libreriasJs')
-
-    <!-- Caja -->
-    <script>
-        $(document).ready(function() {
-            $('.exit').click(function() {
-                $('#cajaModel').modal("show");
-                $('#modelHeading').html("Salir de Punto de Venta");
-            });
-        });
-
-    </script>
-
-    <!-- Entradas -->
-    <script>
-        $(document).ready(function() {
-            $('.entradaEfectiv').click(function() {
-                $('#entradaModel').modal("show");
-                $('#modelHeading').html("Salir de Punto de Venta");
-            });
-        });
-
-    </script>
-    <!-- Fin -->
-
-
-    <!--Rellenar Combo -->
-    <script>
-        $(document).ready(function() {
-            fetch_customer_data();
-
-            function fetch_customer_data(query = '') {
-                $.ajax({
-                    url: "{{ route('llenar') }}",
-                    type: "GET",
-                    data: {
-                        query: query
-                    },
-                    dataType: 'json',
-                    success: function(data) {
-                        $('#precioP').val(data.table_datos);
-                        $('#total').text(data.total_datos);
-                    }
-                })
-            }
-
-            $(document).on('change', '#descripcion', function() {
-                var query = $(this).val();
-                fetch_customer_data(query);
-            });
-        });
-
-    </script>
-
-
-    <!--precio venta -->
-    <script>
-        $(document).ready(function() {
-            $("#inputGanancia").keyup(function() {
-                var Precioc = document.getElementById("inputPrecioc").value;
-                Ganancia = $(this).val(); // initialization in an inner scope
-                Resultado = (parseFloat(Ganancia) + parseFloat(Precioc));
-                $("#inputPreciov").val(Resultado);
-            });
-
-            $("#inputPrecioc").change(function() {
-                var Ganancia = document.getElementById("inputGanancia").value;
-                Precioc = $(this).val(); // initialization in an inner scope
-                Resultado = (parseFloat(Precioc) + parseFloat(Ganancia));
-                $("#inputPreciov").val(Resultado);
-            });
-        });
-
-    </script>
-
-    <!-- JS Reportes-->
-    <script>
-        //Código a ejecutar cuando se carga la página 
-        $(document).ready(function() {
-            fetch_customer_data();
-            $(function() {
-                $("#datepicker").datepicker({
-                    dateFormat: 'yy/mm/dd'
-                });
-                $("#datepicker_2").datepicker({
-                    dateFormat: 'yy/mm/dd'
-                });
-            });
-
-            function fetch_customer_data(date1 = '', date2 = '', sale_by = '') {
-                $.ajax({
-                    url: "{{ route('reporte') }}",
-                    method: 'GET',
-                    data: {
-                        date1: date1,
-                        date2: date2,
-                        sale_by: sale_by
-                    },
-                    dataType: 'json',
-                    success: function(data) {
-                        $('#tbody_re').html(data.table_data);
-                        $('#plantilla').html(data.table_data);
-                        $('#t_re ').text(data.total_data);
-                    }
-                })
-            }
-
-            $(document).on('change', '#datepicker', function() {
-                //referencia al elemento que se le está aplicando el evento.
-                //var date1 = $(this).val();
-                var sale_by = $("#sale_by").val();
-                var date1 = $("#datepicker").val();
-                var date2 = $("#datepicker_2").val();
-                //pasar parametro a la funcion
-                fetch_customer_data(date1, date2, sale_by);
-            });
-
-            $(document).on('change', '#datepicker_2', function() {
-
-                var sale_by = $("#sale_by").val();
-                var date1 = $("#datepicker").val();
-                var date2 = $("#datepicker_2").val();
-                //pasar parametro a la funcion
-                fetch_customer_data(date1, date2, sale_by);
-            });
-
-            $(document).on('change', '#sale_by', function() {
-                //referencia al elemento que se le está aplicando el evento.          
-                var sale_by = $(this).val();
-                var date1 = $("#datepicker").val();
-                var date2 = $("#datepicker_2").val();
-                //pasar parametro a la funcion
-                fetch_customer_data(date1, date2, sale_by);
-
-            });
-
-        });
-
-    </script>
-
-    <!-- Cobrar -->
-
-    <script>
-        $(document).ready(function() {
-            $('#cobrar').click(function() {
-                $('#modalCobro').modal('show');
-
-            });
-            fetch_customer_data();
-
-            function fetch_customer_data() {
-                $.ajax({
-                    url: "{{ route('cobrar') }}",
-                    type: "GET",
-                    data: {},
-                    dataType: 'json',
-                    success: function(data) {
-                        $('#total_pagar').text(data.total_pagar);
-                        $('#pago').val(data.total_pagar);
-                        $('#articulos').text(data.total_articulos);
-                    }
-                })
-                $("#pago").keyup(function() {
-                    var pagoCon = document.getElementById("pago").value;
-                    var total = $("#total_pagar").text();
-                    Resultado = (parseFloat(pagoCon) - parseFloat(total));
-                    $('#cambio').val(Resultado);
-
-                });
-            }
-        });
-
-    </script>
 </body>
 
 </html>

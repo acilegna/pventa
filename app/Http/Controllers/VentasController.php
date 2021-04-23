@@ -3,13 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
 use App\Cliente;
 use App\Product;
 use App\Sell;
 use App\SellProduct;
-use App\Inventario;
 use App\Mayoreo;
+use App\MovePayment;
 
 class VentasController extends Controller
 {
@@ -48,16 +47,28 @@ class VentasController extends Controller
             $venta = Sell::latest('id')->first();
             $id_venta = $venta["id"];
             $producto_vendido = new SellProduct();
-
+            $userLog = auth()->id();
             $producto_vendido->fill([
                 "id_venta" => $id_venta,
-                "id_user" => 1,
+                "id_user" => $userLog,
                 "id_producto" => $producto->id,
                 "descripcion" => $producto->descripcion,
                 "precio" => $producto->p_venta,
                 "cantidad" => $producto->cantidad,
             ]);
 
+            //MOVIMIENTOS CAJA 
+            //consultar turnos abiertos
+            $movimientos = MovePayment::turnOpen();
+            $id = $movimientos[0]->id;
+            $acomuladoVentas = $movimientos[0]->acomulado_ventas;
+            $acomuladoVentas += $total_venta;
+            //modificar em movimientos de caja
+            $move = MovePayment::find($id);
+            $move->acomulado_ventas = $acomuladoVentas;
+            $move->save();
+
+            //VENTAS
             //modificar en ventas 
             $venta->total = $total_venta;
             $venta->save();
@@ -135,8 +146,8 @@ class VentasController extends Controller
         $producto,
         $codigo_b,
         $cantidad = 0,
-        $value_varios = "0",
-        $value_uno = "0"
+        $value_varios = "0"
+        //$value_uno = "0"
     ) {
 
         //verificar si  el producto tiene existencia como 0
@@ -152,7 +163,6 @@ class VentasController extends Controller
 
         $codigo_b = $producto->codigo;
         $indice = $this->buscarIndice($codigo_b, $productos);
-        $existenciadeProducto = $producto->existencia;
 
         if ($indice === NULL and $cantidad < 1) {
             array_push($productos, $producto);
@@ -247,12 +257,7 @@ class VentasController extends Controller
             $query = $request->get('query');
             if ($query != '') {
                 //hace el filtro
-                $data = DB::table('productos')
-                    ->where('id', 'like', '%' . $query . '%')
-                    ->orWhere('codigo', 'like', '%' . $query . '%')
-                    ->orWhere('descripcion', 'like', '%' . $query . '%')
-                    ->orderBy('id', 'desc')
-                    ->get();
+                $data = Product::searchProduct($query);
             }
 
             //si existe 
@@ -276,7 +281,7 @@ class VentasController extends Controller
             $query = $request->get('query');
 
             if ($query != '' and strlen($query) >= 4) {
-                $data = DB::table('productos')->where("codigo", "=", $query)->get();
+                $data = Product::searchByCodigo($query);
             }
             if (isset($data)) {
                 $total_row = $data->count();
@@ -304,7 +309,8 @@ class VentasController extends Controller
             $query = $request->get('query');
             //si no esta vacio y su longitud es mayorigual a 4   
             if ($query != '' and strlen($query) >= 4) {
-                $data = DB::table('productos')->where("codigo", "=", $query)->get();
+
+                $data = Product::searchByCodigo($query);
             }
             if ($data != '') {
                 $total_row = $data->count();
@@ -328,8 +334,7 @@ class VentasController extends Controller
 
         $total_produtos = $this->totalProductos();
         $total = $this->mayoreo();
-        $sql_mayoreo = DB::table('mayoreos')->get();
-        $sql_precio = DB::table('productos')->get();
+        $sql_mayoreo = Mayoreo::getMayoreos();
         return view(
             "ventas.ventas",
             [
@@ -402,7 +407,7 @@ class VentasController extends Controller
             // }
             $data = array(
                 'total_articulos'  => $total_produtos,
-                'total_pagar'  => $total
+                'total_pagar'  => $total[0]
             );
             echo json_encode($data);
         }

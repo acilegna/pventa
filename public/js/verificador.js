@@ -25,8 +25,8 @@ $( document ).ready( function ()
             {
                 var registros = eval( data.table_datos );
                 var total = eval( data.total_datos );
-                console.log( registros );
-                console.log( total );
+                //console.log( registros );
+                //console.log( total );
                 if ( total >= 1 )
                 {
 

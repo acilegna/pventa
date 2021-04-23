@@ -6,7 +6,6 @@ use App\CashBox;
 use App\MoveClosing;
 use App\MovePayment;
 use App\Sell;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -226,7 +225,7 @@ class CajaController extends Controller
             return view('cajas.registroFinal')->with('alert');
         } else {
 
-            return view('panel.panel');
+            return redirect('/welcome');
         }
     }
 
@@ -264,7 +263,8 @@ class CajaController extends Controller
         $caja = CashBox::updateBoxInactive($id_caja);
         if ($request->input('registrar') == 'regCaja') {
             $this->saveMovimientoscaja($id_caja, $inicial, $id_usu, $fechaHora);
-            return view('panel.panel');
+            //return view('panel.panel');
+            return redirect('/welcome');
         }
         if ($request->input('cerrar') == 'close') {
 

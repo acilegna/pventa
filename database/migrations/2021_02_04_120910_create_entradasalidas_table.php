@@ -23,7 +23,7 @@ class CreateEntradasalidasTable extends Migration
         });
     }
 
-     
+
 
     /**
      * Reverse the migrations.

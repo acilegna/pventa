@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Mayoreo;
-use DB;
 
 
 class MayoreoController extends Controller
@@ -23,7 +22,7 @@ class MayoreoController extends Controller
     $cantidad = $request->cantidad;
     $precio = $request->precio;
 
-    //mete en arreglo y los manda a la funcion para insertar
+    //guardar en arreglo 
     $datos = [
       'id_prod' => $id,
       'cantidad' => $cantidad,
@@ -49,7 +48,7 @@ class MayoreoController extends Controller
   {
     $id = $datos['id_prod'];
     $precio_mayoreo = $datos['p_mayoreo'];
-    //$consulta = DB::table('productos')->where('id', '=', $id)->get();
+
     $consulta = Product::getProducts($id);
 
     foreach ($consulta as  $value) {
@@ -79,7 +78,8 @@ class MayoreoController extends Controller
       $query = $request->get('query');
 
       if ($query != '') {
-        $data = DB::table('productos')->where('id', '=', $query)->get();
+
+        $data = Product::getProducts($query);
       }
 
       if (isset($data)) {

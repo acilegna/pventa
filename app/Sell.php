@@ -11,6 +11,6 @@ class Sell extends Model
     public $timestamps = true;
 
     //lista blanca atributos que deberían ser asignables en masa
-    protected $fillable = 
-    	['total','fecha'];
+    protected $fillable =
+    ['total', 'fecha'];
 }

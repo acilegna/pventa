@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Inventario;
-use DB;
 
 class ProductosController extends Controller
 {
@@ -180,7 +179,7 @@ class ProductosController extends Controller
 
   public function  editProductos($param)
   {
-    $consulta = DB::table('productos')->where('id', $param)->get();
+    $consulta = Product::searchEditProduct($param);
 
     return view('productos.editproductos', ['consulta' => $consulta]);
   }
@@ -197,17 +196,10 @@ class ProductosController extends Controller
       $query = $request->get('query');
       if ($query != '') {
         //hace el filtro
-        $data = DB::table('productos')
-          ->where('id', 'like', '%' . $query . '%')
-          ->orWhere('codigo', 'like', '%' . $query . '%')
-          ->orWhere('descripcion', 'like', '%' . $query . '%')
-          ->orderBy('id', 'desc')
-          ->get();
+        $data = Product::searchProduct($query);
       } else {
         //muestra todos los datos
-        $data = DB::table('productos')
-          ->orderBy('id', 'desc')
-          ->get();
+        $data = Product::searchAllProduct();
       }
       $total_row = $data->count();
       if ($total_row > 0) {
