@@ -54,7 +54,7 @@ Route::get('/turnoOpen', 'CajaController@turnoOpen')->name('turnoOpen');
 Route::post('/verificar', 'CajaController@altaRegistroFin')->name('verificar');
 
 //PRODUCTOS
-Route::post('/save', 'ProductosController@saveNewProduct')->name('save');
+Route::post('/saveProduct', 'ProductosController@saveNewProduct')->name('saveProduct');
 Route::get('/productos', 'ProductosController@all')->name('productos');
 Route::get('/altaProd', 'ProductosController@altaProductos')->name('altaProd');
 Route::post('/saveChang', 'ProductosController@saveCambios')->name('savecChang');
@@ -86,12 +86,7 @@ Route::post('/recibe', 'MayoreoController@recibeDatosmayoreo')->name('recibe');
 Route::get('/llenar', 'MayoreoController@llenarInput')->name('llenar');
 
 //CLIENTES
-Route::get('/viewFiltroC', 'ClienteController@viewFiltro')->name('viewFiltroC');
-Route::get('/ver', 'ClienteController@ver')->name('ver');
-Route::get('/actionC', 'ClienteController@action')->name('actionC');
-Route::get('viewFiltroC/{cli_id?}', 'ClienteController@show');
-Route::put('viewFiltroC/{cli_id}', 'ClienteController@update');
-Route::post('viewFiltroC', 'ClienteController@store');
+
 Route::resource('client', 'ClientController');
 Route::get('/viewClientes', 'ClientController@index')->name('viewClientes');
 Route::get('/deleteClients', 'ClientController@destroy')->name('deleteClients');

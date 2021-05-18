@@ -50,7 +50,7 @@ $( function ()
 
     $( '#createNewProduct' ).click( function ()
     {
-        $( '#saveBtn' ).val( "create-product" );
+        $( '#saveBtnn' ).val( "create-product" );
         $( '#product_id' ).val( '' );
         $( '#productForm' ).trigger( "reset" );
         $( '#modelHeading' ).html( "Crear nuevo cliente" );
@@ -66,7 +66,7 @@ $( function ()
         $.get( 'client' + '/' + product_id + '/edit', function ( data )
         {
             $( '#modelHeading' ).html( "Editar " );
-            $( '#saveBtn' ).val( "edit-user" );
+            $( '#saveBtnn' ).val( "edit-user" );
             $( '#ajaxModel' ).modal( 'show' );
             $( '#product_id' ).val( data.id );
             $( '#nombre' ).val( data.nombre );
@@ -76,10 +76,10 @@ $( function ()
         } )
     } );
 
-    $( '#saveBtn' ).click( function ( e )
+    $( '#saveBtnn' ).click( function ( e )
     {
         e.preventDefault();
-        $( this ).html( 'Sending..' );
+        // $( this ).html( 'Sending..' );
         $.ajax( {
             data: $( '#productForm' ).serialize(),
             url: 'client',
@@ -99,7 +99,8 @@ $( function ()
             error: function ( data )
             {
                 console.log( 'Error:', data );
-                $( '#saveBtn' ).html( 'Save Changes' );
+                //
+                // $( '#saveBtnn' ).html( 'Save Changes' );
             }
         } );
     } );

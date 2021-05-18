@@ -23,7 +23,7 @@ $( document ).ready( function ()
                     for ( var i = 0; i < registros.length; i++ )
                     {
                         resultado += "<tr> <td>" + registros[ i ][ "codigo" ] + "</td> <td>" + registros[ i ][ "descripcion" ] + "</td> <td>" +
-                            registros[ i ][ "categoria" ] + "</td> <td>" + registros[ i ][ "p_compra" ] + "</td> <td>" + registros[ i ][ "existencia" ] +
+                            registros[ i ][ "categoria" ] + "</td> <td>" + registros[ i ][ "p_venta" ] + "</td> <td>" + registros[ i ][ "existencia" ] +
                             "</td> <td><input type = 'hidden' name = 'codigoProducto' value = " + registros[ i ][ "codigo" ] + "> " +
                             "<a data - toggle='tooltip' data-placement='right' title = 'Agregar Inventario' href='./viewInv/" + registros[ i ][ "id" ] + "'> " +
                             "<span class='glyphicon glyphicon-list-alt borde-inv'aria-hidden='true'></span></a>" +

@@ -1,7 +1,7 @@
 
 $( document ).ready( function ()
 {
-    $( "#inputGanancia" ).keyup( function ()
+    $( "#inputGanancia" ).change( function ()
     {
         var Precioc = document.getElementById( "inputPrecioc" ).value;
         Ganancia = $( this ).val(); // initialization in an inner scope

@@ -8,6 +8,10 @@ use App\Inventario;
 
 class ProductosController extends Controller
 {
+  public function __construct()
+  {
+    $this->middleware('auth');
+  }
   public function all()
   {
     //obtener datos de tu base de datos
@@ -68,7 +72,7 @@ class ProductosController extends Controller
 
     $productos->save();
     //despues de insertar y modificar retornar a vista productos
-    return view('Productos.allProductos');
+    return redirect('viewFiltro');
   }
 
   public function saveCantidadagregada(Request $request)
@@ -125,8 +129,9 @@ class ProductosController extends Controller
     $id_user = $user->id_employee;
     //alta de inventario
     if ($value_alta == "alta") {
+
       $this->saveCantidadagregada($request);
-      return view('Productos.allProductos');
+      return redirect('viewFiltro');
     }
 
     if ($value_new == "new") {
@@ -168,7 +173,7 @@ class ProductosController extends Controller
       $inventarios->costo_unitario = $request->inputPrecioc;
       $inventarios->costo_despues = $request->inputPrecioc;
       $inventarios->save();
-      return view('Productos.allProductos');
+      return redirect('viewFiltro');
     }
   }
 
@@ -219,6 +224,6 @@ class ProductosController extends Controller
   {
     $productos = Product::find($parameters);
     $productos->delete();
-    return view('productos.allProductos');
+    return redirect('viewFiltro');
   }
 }

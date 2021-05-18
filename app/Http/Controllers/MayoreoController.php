@@ -9,6 +9,10 @@ use App\Mayoreo;
 
 class MayoreoController extends Controller
 {
+  public function __construct()
+  {
+    $this->middleware('auth');
+  }
   public function viewMayoreo()
   {
     $productos = Product::all();

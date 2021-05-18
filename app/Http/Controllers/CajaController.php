@@ -11,7 +11,10 @@ use Illuminate\Support\Facades\Auth;
 
 class CajaController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function funcion()
     {
         $alert = '';
@@ -115,7 +118,8 @@ class CajaController extends Controller
         $caja->descripcion = $nameCaja;
         $caja->status = $status;
         $caja->save();
-        return view('panel.panel');
+
+        return redirect('allcaja');
     }
 
     public function saveMovimientoscaja($id_caja, $inicial, $id_usu, $fechaHora)

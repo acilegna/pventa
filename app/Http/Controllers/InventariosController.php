@@ -8,6 +8,10 @@ use App\Product;
 
 class InventariosController extends Controller
 {
+	public function __construct()
+	{
+		$this->middleware('auth');
+	}
 	public function viewInvent($param)
 	{
 

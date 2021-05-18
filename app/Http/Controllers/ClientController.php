@@ -8,11 +8,18 @@ use DataTables;
 
 class ClientController extends Controller
 {
-
+  public function __construct()
+  {
+    $this->middleware('auth');
+  }
   public function index(Request $request)
   {
 
+
     if ($request->ajax()) {
+
+
+
       $data = Cliente::latest()->get();
       return Datatables::of($data)
         ->addIndexColumn()
@@ -24,9 +31,13 @@ class ClientController extends Controller
     return view('clientes.allClientes');
   }
 
+
   public function store(Request $request)
 
   {
+
+    $request->validate(Cliente::$rules);
+
 
     $result = Cliente::updateOrCreate(
       ['id' => $request->product_id],
@@ -35,6 +46,7 @@ class ClientController extends Controller
         'telefono' => $request->telefono, 'direccion' => $request->direccion
       ]
     );
+
 
     $arr = array('msg' => 'El registro ha sido modificado!', 'status' => true);
 

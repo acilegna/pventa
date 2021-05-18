@@ -202,7 +202,8 @@
                                                             <span class="input-group-text">Cantidad</span>
                                                             <span class="input-group-text">$</span>
                                                             <input name="cantidadEntrada" id="cantidadEntrada"
-                                                                class="form-control" type="number">
+                                                                class="form-control" type="text" required=""
+                                                                pattern="[0-9]+">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -212,7 +213,7 @@
                                                             <span class="input-group-text">Comentarios</span>
 
                                                             <input id="comentario" name="comentario" type="text"
-                                                                class="form-control">
+                                                                class="form-control" required="" pattern="[0-9]+">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -256,17 +257,18 @@
                                                             <span class="input-group-text">Cantidad</span>
                                                             <span class="input-group-text">$</span>
                                                             <input name="cantidadEntrada" id="cantidadEntrada"
-                                                                class="form-control" type="number">
+                                                                class="form-control" type="text" required=""
+                                                                pattern="[0-9]+">
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="row">
+                                                <div class=" row">
                                                     <div class="col-md-12 text-center">
                                                         <div class="input-group">
                                                             <span class="input-group-text">Comentarios</span>
 
                                                             <input id="comentario" name="comentario" type="text"
-                                                                class="form-control">
+                                                                class="form-control" required="">
                                                         </div>
                                                     </div>
                                                 </div>

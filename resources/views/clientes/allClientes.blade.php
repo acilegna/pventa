@@ -50,37 +50,36 @@
                         <div class="form-group">
                             <label for="name" class="col-sm-2 control-label">Nombre</label>
                             <div class="col-sm-12">
-                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="" value=""
-                                    maxlength="50" required="">
+                                <input type="text" class="form-control" id="nombre" name="nombre">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Apellidos</label>
                             <div class="col-sm-12">
-                                <input id="apellidos" name="apellidos" required="" placeholder=""
-                                    class="form-control"></input>
+                                <input id="apellidos" name="apellidos" class="form-control">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Telefono</label>
                             <div class="col-sm-12">
-                                <input id="telefono" name="telefono" required="" placeholder=""
-                                    class="form-control"></input>
+                                <input id="telefono" name="telefono" class="form-control">
+
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Direccion</label>
                             <div class="col-sm-12">
-                                <input id="direccion" name="direccion" required="" placeholder=""
-                                    class="form-control"></input>
+                                <input id="direccion" name="direccion" class="form-control">
                             </div>
                         </div>
                         <div class="modal-footer">
                             <div class="col-sm-12">
-                                <button type="submit" class="btn btn-primary" id="saveBtn" value="create">Guardar cambios
+                                <button class="btn btn-outline-success" type="submit" style="display:none" value="entrada"
+                                    id="saveBtns">Guardar
                                 </button>
+                                <button type="submit" class="btn btn-primary" id="saveBtnn">Nuevo </button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                             </div>
                         </div>
