@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+ 
 class Cliente extends Model
 {
      protected $table = 'clientes';
@@ -15,11 +15,5 @@ class Cliente extends Model
           'direccion'
      ];
 
-     public static $rules = [
-          'nombre' => 'required|string',
-          'apellidos' => 'required|string',
-          'telefono' => 'required|numeric',
-          'direccion' => 'required'
-
-     ];
+ 
 }

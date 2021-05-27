@@ -31,8 +31,8 @@
                             value="{{ $product->existencia }}" disabled>
                     </div>
                     <div class="form-group col-md-3">
-                        <label for="inputAgregar">Cantidad a Agregar</label>
-                        <input type="number" class="form-control" name="inputAgregar" id="inputAgregar">
+                        <label for="inputAgregar">Cantidad a Agregar88</label>
+                        <input type="number" class="form-control" name="inputAgregar" id="inputAgregar" required>
                     </div>
                 </div>
 

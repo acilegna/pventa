@@ -50,21 +50,23 @@
                                 Caja?</label>
                             <div class="col-sm-3">
                                 <input type="number" class="form-control-plaintext" id="efectivoFinal"
-                                    name="efectivoFinal" placeholder="$0.00" value=$0.00>
+                                    name="efectivoFinal" placeholder="$0.00" value=$0.00 required>
                             </div>
                         </div>
                         <p id="mensaje"> </p>
                         <input type="number" placeholder="$0.00" class="form-control-plaintext" id="desbloq">
 
                         <button type="submit" class="btn btn-primary" id="closeCount">Cerrar turno</button>
-                        <div class="btn-group fl-rigth"><a href="" id="cancel" class="btn btn-success">Cancelar</a>
-                        </div>
+
+                        <div class="btn-group fl-rigth"><a href="{{ url('/') }}" id="cancel"
+                                class="btn btn-success">Cancelar</a> </div>
                     </div>
                 </div>
-            </form>
-
         </div>
+        </form>
+
     </div>
+</div>
 </div>
 
 <!--   -->

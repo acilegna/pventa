@@ -36,7 +36,7 @@
                         @endforeach
                     </select>
                     <label for="inputAddress">Efectivo Inicial en Caja</label>
-                    <input type="number" class="form-control" id="inicial" name="inicial" placeholder="$0.00">
+                    <input type="number" class="form-control" id="inicial" name="inicial" placeholder="$0.00" required>
 
                     <div class="modal-footer">
 

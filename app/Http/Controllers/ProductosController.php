@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Inventario;
-
+ 
 class ProductosController extends Controller
 {
   public function __construct()
@@ -114,11 +114,12 @@ class ProductosController extends Controller
     $productos->existencia  = $total;
     $productos->save();
   }
-  public function saveNewProduct(Request $request)
+  public function saveNewProduct( Request $request )
   {
-    //recibe todo  lo que manda el formulario    
-    // var_dump($recibe=$request->all());    
-
+    //recibe todo  lo que manda el formulario
+    
+  
+   
     $productos = new Product;
     $inventarios = new Inventario;
     //Recibir valor de boton
@@ -174,7 +175,7 @@ class ProductosController extends Controller
       $inventarios->costo_despues = $request->inputPrecioc;
       $inventarios->save();
       return redirect('viewFiltro');
-    }
+    } 
   }
 
   public function  altaProductos()

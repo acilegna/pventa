@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Cliente;
 use DataTables;
+use App\Http\Requests\ValidarFormularioRequest;
 
 class ClientController extends Controller
 {
@@ -32,18 +33,16 @@ class ClientController extends Controller
   }
 
 
-  public function store(Request $request)
-
-  {
-
-    $request->validate(Cliente::$rules);
-
+  public function store(ValidarFormularioRequest $request){
+ 
 
     $result = Cliente::updateOrCreate(
       ['id' => $request->product_id],
       [
-        'nombre' => $request->nombre, 'apellidos' => $request->apellidos,
-        'telefono' => $request->telefono, 'direccion' => $request->direccion
+        'nombre' => $request->nombre,
+        'apellidos' => $request->apellidos,
+        'telefono' => $request->telefono,
+        'direccion' => $request->direccion
       ]
     );
 
