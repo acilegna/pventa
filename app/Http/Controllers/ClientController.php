@@ -18,9 +18,6 @@ class ClientController extends Controller
 
 
     if ($request->ajax()) {
-
-
-
       $data = Cliente::latest()->get();
       return Datatables::of($data)
         ->addIndexColumn()
@@ -28,13 +25,26 @@ class ClientController extends Controller
         ->rawColumns(['btn'])
         ->make(true);
     }
-
     return view('clientes.allClientes');
   }
 
-
-  public function store(ValidarFormularioRequest $request){
  
+  public function store( Request $request)
+  {
+  
+    $validator = \Validator::make($request->all(), [
+      'nombre' => 'required|alpha',
+      'apellidos' => 'required|alpha',
+      'telefono' => 'required',
+      'direccion' => 'required'       
+    ]);
+    
+     
+    
+
+    if ($validator->fails()) {
+      return response()->json(['errors' => $validator->errors()->all()]);
+    } 
 
     $result = Cliente::updateOrCreate(
       ['id' => $request->product_id],
@@ -46,11 +56,12 @@ class ClientController extends Controller
       ]
     );
 
-
+  
     $arr = array('msg' => 'El registro ha sido modificado!', 'status' => true);
 
     return Response()->json($arr);
   }
+
 
   public function edit($id)
   {

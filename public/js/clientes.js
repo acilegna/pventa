@@ -87,14 +87,29 @@ $( function ()
             dataType: 'json',
             success: function ( data )
             {
-                console.log( data );
+                
                 $( '#productForm' ).trigger( "reset" );
                 $( '#ajaxModel' ).modal( 'hide' );
                 $( '#res_message' ).html( data.msg );
-                $( '#msg_div' ).removeClass( 'd-none' );
+                $( '#msg_div' ).removeClass( 'd-none' );              
 
                 table.draw();
-            },
+            }, 
+            success: function(result) {
+                if(result.errors) {
+                    $('.alert-danger').html('');
+                    $.each(result.errors, function(key, value) {
+                        $('.alert-danger').show();
+                        $('.alert-danger').append('<strong><li>'+value+'</li></strong>');
+                    });
+                } else {
+                    $('.alert-danger').hide();
+                    $( '#ajaxModel' ).modal( 'hide' );
+                    table.draw();
+                   
+                 
+                }
+            }, 
 
             error: function ( data )
             {
@@ -118,6 +133,7 @@ $( function ()
                 {
                     console.log( data );
                     $( '#res_message' ).html( data.msg );
+                    $( '#res_message' ).html( "Canceladowww" );
                     $( '#msg_div' ).removeClass( 'd-none' );
                     table.draw();
 

@@ -77,6 +77,16 @@
 
                             </li>
                             <li class="nav-item">
+                                <a href="{{ route('viewUser') }}" class="nav-link">
+                                    <i class="nav-icon fa fa-home"></i>
+                                    <p>
+                                        Usuarios
+
+                                    </p>
+                                </a>
+
+                            </li>
+                            <li class="nav-item">
                                 <a href="{{ route('viewFiltro') }}" class="nav-link">
                                     <i class="nav-icon fa fa-cubes"></i>
                                     <p>
@@ -84,13 +94,17 @@
                                     </p>
                                 </a>
                             </li>
+                           
+
                             <li class="nav-item">
-                                <a href="{{ route('mayoreo') }}" class="nav-link">
+                            <a href="{{ route('mayoreo') }}" class="nav-link">
                                     <i class="nav-icon fa fa-tags"></i>
                                     <p>
-                                        Mayoreo
+                                    Mayoreos
+                                        
                                     </p>
                                 </a>
+                                
                             </li>
 
                             <li class="nav-item">
@@ -124,12 +138,7 @@
                                             <p>Reporte de Ventas</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="pages/charts/flot.html" class="nav-link ">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Reporte de Compras</p>
-                                        </a>
-                                    </li>
+                                    
                                     <li class="nav-item">
                                         <a href="pages/charts/inline.html" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>

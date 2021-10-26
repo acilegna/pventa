@@ -5,9 +5,29 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Inventario;
+use App\Procedures\Procedure;
  
 class ProductosController extends Controller
 {
+
+  //ejemplo de PROCEDIMIENTOS   SIN PARAMETRO
+   public function procedimiento()
+  {
+   $procedimientos = new Procedure;
+   $resProcedure= $procedimientos->getProcedimiento();
+   var_dump($resProcedure);
+   foreach ($resProcedure as $res){
+     var_dump($res->precio);
+   }
+  }
+  //ejemplo de PROCEDIMIENTOS  CON PARAMETRO 
+ public function procedimiento1()
+  {
+   $procedimientos1 = new Procedure;
+   $resProcedure1= $procedimientos1->getProcedimiento1(44);
+   var_dump($resProcedure1);
+    
+  }
   public function __construct()
   {
     $this->middleware('auth');

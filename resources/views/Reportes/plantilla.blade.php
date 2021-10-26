@@ -125,7 +125,16 @@
 
             </tr>
             <tbody id="plantilla">
+                @php
+                    $total=0;                
+                @endphp
+                
                 @foreach ($datos as $x)
+                    @php
+                        $valor=$x->total;
+                        $total=$valor+$total;  
+                        $total_venta = $total;                         
+                    @endphp 
                     <tr>
                         <td>{{ $x->id }}</td>
                         <td>{{ $x->fecha }}</td>
@@ -136,14 +145,7 @@
                         <td>{{ $x->total }}</td>
                     </tr>
                 @endforeach
-                <?
-                    $total=0;
-                    foreach ($datos as $key => $value) { 
-                        $valor=$value->total;
-                        $total=$valor+$total;
-                    }
-                    $total_venta = $total;
-                    ?>
+         
                     <tr>
                         <td style="border:0;">&nbsp;</td>
                         <td style="border:0;">&nbsp;</td>
@@ -151,7 +153,7 @@
                         <td style="border:0;">&nbsp;</td>
                         <td style="border:0;">&nbsp;</td>
                         <td align="right"><strong>TOTAL</strong></td>
-                        <td align="right"><span class="text">${{ $total_venta }}</span></td>
+                        <td align="left"><span class="text">${{$total_venta = $total}}</span></td>
                    </tr>
             </tbody>
             

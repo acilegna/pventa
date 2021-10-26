@@ -29,8 +29,7 @@ $( document ).ready( function ()
                 var registros = eval( data.table_data );
                 var total = eval( data.total_data );
                 res = "";
-                //console.log( registros );
-                console.log( total );
+           
                 if ( total >= 1 )
                 {
                     for ( var i = 0; i < registros.length; i++ )
@@ -41,14 +40,16 @@ $( document ).ready( function ()
                             "</td>" + "</tr>";
                     }
                     $( '#tbody_re' ).html( res );
-                    $( '#tre ' ).html( total );
+                    $( '#tre ' ).text( total );
 
+                } else{
+                    result="";
+                    $( '#tbody_re' ).html( result);
+                    $( '#tre ' ).text( 0 );
                 }
 
-                /*
-                $( '#tbody_re' ).html( data.table_data );
-                $( '#plantilla' ).html( data.table_data );
-                $( '#t_re ' ).text( data.total_data );*/
+               
+        
             }
         } )
     }

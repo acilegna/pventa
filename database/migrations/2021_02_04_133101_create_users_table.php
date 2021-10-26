@@ -18,12 +18,15 @@ class CreateUsersTable extends Migration
             $table->string('lastname');
             $table->string('firstname');
             $table->string('email')->unique();
-            $table->string('passwd'); 
-            $table->string('active')->default(0);                    
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->string('active')->default(0);
+            $table->rememberToken();
             $table->timestamps();
         });
     }
-     
+
+
 
     /**
      * Reverse the migrations.

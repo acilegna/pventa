@@ -30,6 +30,7 @@ class ReportController extends Controller
 
 			if ($date1 != '' and $date2 != '' and $user != '') {
 				$data = SellProduct::sellProductByUser($user, $date1, $date2);
+			
 			}
 			if ($date1 != '' and $date2 != '' and $user == 'all') {
 				$data = SellProduct::sellProducts($date1, $date2);
@@ -104,6 +105,8 @@ class ReportController extends Controller
 		$mpdf = new Mpdf();
 		$mpdf->WriteHTML(view('Reportes.plantilla')->with("datos", $datos)->render());
 		$namefile = 'Report_venta_del ' . $fecha_1 . ' al ' . $fecha_2 . '.pdf';
-		$mpdf->Output($namefile, "I");
+		//$mpdf->Output($namefile, "I");
+		$mpdf->Output($namefile, "D");
+		 
 	}
 }

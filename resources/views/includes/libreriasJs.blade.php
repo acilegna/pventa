@@ -27,5 +27,8 @@
 <script src="{{ asset('js/exit.js') }}"></script>
 <script src="{{ asset('js/entrada.js') }}"></script>
 <script src="{{ asset('js/salida.js') }}"></script>
+<script src="{{ asset('js/allMayoreo.js') }}"></script>
+<script src="{{ asset('js/editMayoreo.js') }}"></script>
+<script src="{{ asset('js/allUsers.js') }}"></script>
 
 <!-- fin dataTables -->

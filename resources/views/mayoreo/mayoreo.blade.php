@@ -14,11 +14,10 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroup-sizing-sm">Producto:</span>
                 </div>
+                 
                 <select class="custom-select" id="descripcion" aria-label="Example select with button addon" name="id">
                     <option value=" "></option>
-                    @foreach ($productos as $list)
-                        <option value="{{ $list->id }}">{{ $list->descripcion }}</option>
-                    @endforeach
+                   @foreach ($productos as $list)   <option value="{{ $list->id }}"> {{ $list->descripcion }}</option> @endforeach  
                 </select>
             </div>
 
@@ -53,9 +52,10 @@
             </div>
 
             <div class="input-group">
-                <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-cube"></i> Agregar mayoreo al
+                <button class="btn btn-outline-secondary" type="submit" value="0" name="addM"><i class="fa fa-cube"></i> Agregar mayoreo al
                     producto</button>
             </div>
+            
         </form>
     </div>
 @endsection

@@ -35,6 +35,17 @@ Route::get('/', function () {
 	}
 	*/
 });
+//USUARIOS
+//USUARIOS
+Route::get('viewUser', 'UserController@viewUsers')->name('viewUser');
+Route::get('/allUser', 'UserController@allUsers')->name('allUser');
+Route::get('/viewEditUser/{id}', 'UserController@viewEdit')->name('viewEditUser');
+//Route::get('viewChange', 'UserController@viewPass')->name('viewChange');
+Route::get('viewChange', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('viewChange');
+
+Route::post('saveUser', 'UserController@saveEditUser')->name('saveUser');
+
+
 //entradas
 Route::get('/entrada', 'EntradasController@viewEntrada')->name('entrada');
 //
@@ -54,6 +65,8 @@ Route::get('/turnoOpen', 'CajaController@turnoOpen')->name('turnoOpen');
 Route::post('/verificar', 'CajaController@altaRegistroFin')->name('verificar');
 
 //PRODUCTOS
+Route::get('procedure','ProductosController@procedimiento')->name('procedure');
+Route::get('procedure1','ProductosController@procedimiento1')->name('procedure1');
 Route::post('/saveProduct', 'ProductosController@saveNewProduct')->name('saveProduct');
 Route::get('/productos', 'ProductosController@all')->name('productos');
 Route::get('/altaProd', 'ProductosController@altaProductos')->name('altaProd');
@@ -80,13 +93,19 @@ Route::get('/agrega', 'VentasController@agregaVarios')->name('agrega');
 Route::get('/cobrar', 'VentasController@cobrar')->name('cobrar');
 Route::get('/cobrar', 'VentasController@cobrar')->name('cobrar');
 
+
 //MAYOREO
 Route::get('/mayoreo', 'MayoreoController@viewMayoreo')->name('mayoreo');
 Route::post('/recibe', 'MayoreoController@recibeDatosmayoreo')->name('recibe');
 Route::get('/llenar', 'MayoreoController@llenarInput')->name('llenar');
+Route::get('/allM', 'MayoreoController@allmayoreo')->name('allM');
+Route::get('/newM', 'MayoreoController@newmayoreo')->name('newM');
+Route::get('/viewEdit/{id}', 'MayoreoController@viewEditmayoreo')->name('viewEdit');
+Route::post('/datosM', 'MayoreoController@recibeMayoreo')->name('datosM');
+Route::get('/deleteM/{id}', 'MayoreoController@deleteMayoreo')->name('deleteM');
+
 
 //CLIENTES
-
 Route::resource('client', 'ClientController');
 Route::get('/viewClientes', 'ClientController@index')->name('viewClientes');
 Route::get('/deleteClients', 'ClientController@destroy')->name('deleteClients');

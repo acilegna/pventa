@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
             'lastname' => 'Angie',
             'firstname' => 'Luna',
             'email' => 'acilegna.airam88@gmail.com',
-            'passwd' => Hash::make('12345678'),
+            'password' => Hash::make('12345678'),
             'active' => (1),
         ]);
     }

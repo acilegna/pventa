@@ -38,9 +38,14 @@
     </div>
 </div>
 
- 
+
 
 <div class="modal fade" id="ajaxModel" aria-hidden="true">
+    <div class="text-success" id='result'>
+        @if(Session::has('message'))
+        {{Session::get('message')}}
+        @endif
+    </div>
 
     <div class="modal-dialog">
         <div class="modal-content">
@@ -48,18 +53,27 @@
                 <h4 class="modal-title" id="modelHeading"></h4>
             </div>
             <div class="modal-body">
-                <form id="productForm" name="productForm" class="form-horizontal">
+           
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: none;">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> 
+                <form id="productForm" name="productForm" class="form-horizontal" method="post" action="javascript:void(0)">
+
                     @csrf
-                   
+
+
                     <input type="hidden" name="product_id" id="product_id">
                     <div class="form-group">
                         <label for="name" class="col-sm-2 control-label">Nombre</label>
                         <div class="col-sm-12">
                             <input type="text" class="form-control" id="nombre" name="nombre">
-                            
+
                             @if($errors->has('nombre'))
                             <small class="form-text text-danger">{{ $errors->first('nombre') }}</small>
-                            <p>Hay errores!</p>
+
+                            <span class="text-danger">{{ $errors->first('email') }}</span>
                             @endif
 
                         </div>

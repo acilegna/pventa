@@ -29,6 +29,11 @@
                         <div class="d-flex justify-content-center mt-3 login_container">
                             <button type="submit" name="logins" id="logins" class="btn login_btn"
                                 value="log">Entrar</button>
+
+                        </div>
+                        <div class="d-flex justify-content-center mt-3 login_container">
+
+                            <a href="{{ route('viewChange') }}">¿Olvidaste tu contraseña?</a>
                         </div>
                     </form>
                 </div>
