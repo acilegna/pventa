@@ -34,7 +34,7 @@ $( document ).ready( function ()
                             registros[ i ][ "p_venta" ] + "</td> <td>" + registros[ i ][ "existencia" ] +
                             "</td> <td><input type = 'hidden' name = 'codigoProducto' value = " + registros[ i ][ "codigo" ] + "> " +
                             "<a data - toggle='tooltip' data - placement='bottom' title = 'Agregar a venta' > " +
-                            "<button class='btn bordes' type='submit' name='agregarV' value='0'><i class='fa fa-cart-plus'></i> </button></a>" +
+                            "<button class='btn bordes' type='submit'  id='addOne' name='addOne' value='0'><i class='fa fa-cart-plus'></i> </button></a>" +
                             "<a data-toggle='tooltip' data-placement='bottom' title='Agregar Inventario' href='./viewInv/" + registros[ i ][ "id" ] + "'>" +
                             "<button class='btn bordes' type='button' name='accion' value='agrega'><i class='fa fa fa-plus-square'></i> </button></a>" +
 

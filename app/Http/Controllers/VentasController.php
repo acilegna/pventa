@@ -126,14 +126,17 @@ class VentasController extends Controller
 
     public function buscarProducto(Request $request)
     {
+        //cantidad de productos agregados
         $cantidad = $request->post("cantidad");
         $codigo_b = $request->post("codigoProducto");
+        //var_dump($cantidad);
 
         //recibir valor de boton presionado
         $value_varios = $request->input('agregarVarios');
-        $value_uno = $request->input('agregarV');
+        $value_uno = $request->input('addOne');
 
         $producto = Product::where("codigo", "=", $codigo_b)->first();
+
 
         //"Si no hay algo..esta vacio"
         if (!$producto) {
@@ -145,6 +148,7 @@ class VentasController extends Controller
         $this->agregarProductoTabla($producto, $codigo_b, $cantidad, $value_varios, $value_uno);
         return redirect()->route("viewVents");
     }
+
 
     private function agregarProductoTabla(
         $producto,
@@ -165,8 +169,10 @@ class VentasController extends Controller
 
         $productos = $this->obtenerProductos();
 
+
         $codigo_b = $producto->codigo;
         $indice = $this->buscarIndice($codigo_b, $productos);
+
 
         if ($indice === NULL and $cantidad < 1) {
             array_push($productos, $producto);
@@ -201,12 +207,14 @@ class VentasController extends Controller
             }
             $productos[$indice]->cantidad = $productos[$indice]->cantidad + $cantidad;
         } //fin else if
+
     } //fin funcion  
 
 
     // buscar indice dentro del arreglo
     private function buscarIndice($codigo, $productos)
     {
+
         foreach ($productos as $indice => $producto) {
             if ($producto->codigo === $codigo) {
                 //manda la variable para que incremente la cantidad agregada

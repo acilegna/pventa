@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -69,12 +70,36 @@ class User extends Authenticatable
 
     public static function saveChangesUser($datos)
     {
-        return self::where('id_employee', $datos['inputId'])->update(
-            ['email' => $datos['inputEmail'], 'active' => $datos['status']]
-        );
+
+
+        $password = $datos['inputContraseña'];
+        $verifypass = $datos['inputContraseña2'];
+
+        if ($verifypass != $password) {
+        } else {
+            return self::where('id_employee', $datos['inputId'])->update(
+                [
+                    'firstname' => $datos['inputUser'],
+                    'lastname' => $datos['inputApe'],
+                    'email' => $datos['inputEmail'],
+                    'active' => $datos['status'],
+                    'password' => $datos['inputContraseña'] = Hash::make($password),
+
+                ]
+
+            );
+        }
+
         User::getEmail($datos['inputId']);
         //if($datos['inputEmail']!=)
     }
+    public static function deleteUsers($id)
+    {
+        //var_dump($id);
+        return self::where('id_employee', $id)->delete();
+    }
+
+
 
     public static function getEmail($id)
     {

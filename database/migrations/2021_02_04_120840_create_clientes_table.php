@@ -16,17 +16,17 @@ class CreateClientesTable extends Migration
         Schema::create('clientes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nombre');
-            $table->string('apellidos'); 
-            $table->string('telefono');   
-            $table->string('direccion');            
-            $table->integer('id_estado')->default(1); 
+            $table->string('apellidos');
+            $table->string('telefono');
+            $table->string('direccion');
+            $table->integer('id_estado')->default(1);
             $table->integer('id_municipio')->default(1);
-            $table->integer('status')->default(1);        
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }
 
-    
+
     /**
      * Reverse the migrations.
      *

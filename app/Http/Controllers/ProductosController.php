@@ -6,10 +6,11 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\Inventario;
 use App\Procedures\Procedure;
- 
+
 class ProductosController extends Controller
 {
 
+  /*
   //ejemplo de PROCEDIMIENTOS   SIN PARAMETRO
    public function procedimiento()
   {
@@ -27,7 +28,7 @@ class ProductosController extends Controller
    $resProcedure1= $procedimientos1->getProcedimiento1(44);
    var_dump($resProcedure1);
     
-  }
+  } */
   public function __construct()
   {
     $this->middleware('auth');
@@ -134,12 +135,12 @@ class ProductosController extends Controller
     $productos->existencia  = $total;
     $productos->save();
   }
-  public function saveNewProduct( Request $request )
+  public function saveNewProduct(Request $request)
   {
     //recibe todo  lo que manda el formulario
-    
-  
-   
+
+
+
     $productos = new Product;
     $inventarios = new Inventario;
     //Recibir valor de boton
@@ -195,7 +196,7 @@ class ProductosController extends Controller
       $inventarios->costo_despues = $request->inputPrecioc;
       $inventarios->save();
       return redirect('viewFiltro');
-    } 
+    }
   }
 
   public function  altaProductos()

@@ -40,10 +40,14 @@ Route::get('/', function () {
 Route::get('viewUser', 'UserController@viewUsers')->name('viewUser');
 Route::get('/allUser', 'UserController@allUsers')->name('allUser');
 Route::get('/viewEditUser/{id}', 'UserController@viewEdit')->name('viewEditUser');
+Route::get('/deleteUser/{id}', 'UserController@deleteUser')->name('delete');
 //Route::get('viewChange', 'UserController@viewPass')->name('viewChange');
 Route::get('viewChange', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('viewChange');
 
 Route::post('saveUser', 'UserController@saveEditUser')->name('saveUser');
+Route::get('/viewAdd', 'UserController@viewAdduser')->name('viewAdd');
+Route::post('/addUsers', 'UserController@addUser')->name('addUsers');
+
 
 
 //entradas
@@ -65,8 +69,8 @@ Route::get('/turnoOpen', 'CajaController@turnoOpen')->name('turnoOpen');
 Route::post('/verificar', 'CajaController@altaRegistroFin')->name('verificar');
 
 //PRODUCTOS
-Route::get('procedure','ProductosController@procedimiento')->name('procedure');
-Route::get('procedure1','ProductosController@procedimiento1')->name('procedure1');
+Route::get('procedure', 'ProductosController@procedimiento')->name('procedure');
+Route::get('procedure1', 'ProductosController@procedimiento1')->name('procedure1');
 Route::post('/saveProduct', 'ProductosController@saveNewProduct')->name('saveProduct');
 Route::get('/productos', 'ProductosController@all')->name('productos');
 Route::get('/altaProd', 'ProductosController@altaProductos')->name('altaProd');

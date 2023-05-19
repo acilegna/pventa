@@ -22,16 +22,17 @@ $( document ).ready( function ()
 
                     for ( var i = 0; i < registros.length; i++ )
                     {
-                        resultado += "<tr> <td>" + registros[ i ][ "lastname" ] + "</td> <td>" + registros[ i ][ "firstname" ] + "</td> <td>" +
+                        resultado += "<tr> <td>" + registros[ i ][ "firstname" ] + "</td> <td>" + registros[ i ][ "lastname" ] + "</td> <td>" +
                             registros[ i ][ "email" ] + "</td> <td>" + registros[ i ][ "active" ] + "</td> <td><input type='hidden' name = 'id' value = " + registros[ i ][ "id_employee" ] + "> "  +
                             "<a data-toggle='tooltip' data-placement='right' title='Editar' href='./viewEditUser/" + registros[ i ][ "id_employee" ] + "'>" +
                             "<span class='glyphicon glyphicon-pencil borde-edit' aria-hidden='true'></span></a>" +
-                            "<a data-toggle='tooltip' data-placement='right' title='Eliminar' href='./deleteM/" + registros[ i ][ "id_employee" ] + "'>" +
+                            "<a data-toggle='tooltip' data-placement='right' title='Eliminar' href='./deleteUser/" + registros[ i ][ "id_employee" ] + "'>" +
                             "<span class='glyphicon glyphicon-trash borde-delete' aria-hidden='true'></span></a>" +
                             "</td></tr>";
                     }
 
                     $( '#tbodyusers' ).html( resultado );
+                    $( '#total_records' ).html( total );
 
                 } else
                 {

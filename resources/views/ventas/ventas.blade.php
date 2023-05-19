@@ -15,7 +15,8 @@
                                     class="form-control" placeholder="Ingresa el codigo..">
 
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-primary" type="submit"><i class="fa fa-cube"></i> Agregar
+                                    <button class="btn btn-outline-primary" type="submit"><i class="fa fa-cube"></i>
+                                        Agregar
                                         el Producto</button>
                                 </div>
                             </div>
@@ -148,8 +149,6 @@
                                 </td>
 
                             </tr>
-
-
                         @endforeach
 
                     </tbody>
@@ -176,8 +175,6 @@
                 </div>
 
             </div>
-
-
         @endif
     </div>
 
@@ -215,7 +212,8 @@
                                 <tfoot style="display:none">
                                     <tr>
                                         <th colspan="6">
-                                            <h5 class="izquierda">Registros encontrados: <span id="total_recordsV"></span>
+                                            <h5 class="izquierda">Registros encontrados: <span
+                                                    id="total_recordsV"></span>
                                             </h5>
                                         </th>
                                     </tr>
@@ -255,7 +253,8 @@
                         </div>
                         <div class="modal-footer">
 
-                            <button type="submit" class="btn btn-success" value="0" name="agregarV">Agregar a Venta</button>
+                            <button type="submit" class="btn btn-success" value="0" name="addOne" id="addOne">Agregar a
+                                Venta</button>
 
                             <button type="button" class="btn btn-secondary" data-dismiss="modal"
                                 id="closeVerificador">Cerrar</button>
@@ -364,7 +363,8 @@
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
                                         id="Btncancela">Cancelar cobro</button>
                                     <span id="labelt" class="label">Total de artículos</span>
-                                    <h5 id="articulos" class="text-center" style="font-size:20px;color:#0d069c">$0.00</h5>
+                                    <h5 id="articulos" class="text-center" style="font-size:20px;color:#0d069c">$0.00
+                                    </h5>
 
                                 </div>
                             </div>

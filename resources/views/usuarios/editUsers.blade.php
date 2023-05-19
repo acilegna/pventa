@@ -13,8 +13,16 @@
                 <input name="inputId" type="hidden" value="{{ $usuarios->id_employee }}">
 
                 <div class="form-row">
+
                     <div class="form-group col-md-3">
-                        <label> {{ $usuarios->firstname }} </label>
+                        <label for="inputUser">Usuario</label>
+                        <input type="text" class="form-control" name="inputUser" id="inputUser"
+                            value="{{ $usuarios->firstname }}" required="">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="inputApe">Apellido</label>
+                        <input type="text" class="form-control" name="inputApe" id="inputApe"
+                            value="{{ $usuarios->lastname }}" required="">
                     </div>
                     <div class="form-group col-md-3">
                         <label for="inputEmail">Email</label>
@@ -30,7 +38,18 @@
                         </select>
                     </div>
                 </div>
-
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <label for="inputEmail">Contraseña</label>
+                        <input type="password" class="form-control" name="inputContraseña" id="inputContraseña"
+                            required="">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="inputEmail">Confirmar contraseña</label>
+                        <input type="password" class="form-control" name="inputContraseña2" id="inputContraseña2"
+                            required="">
+                    </div>
+                </div>
 
                 <!--BOTONES-->
                 <div class="col-lg-12">
@@ -44,5 +63,4 @@
         </form>
 
     </div>
-
 @endsection
